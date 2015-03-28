@@ -32,15 +32,19 @@ public:
 	ci::CameraPersp			mCamera;
 	Quatf mObjOrientation;
 	float mScale;
+	long int mRecordingFrameIndex;
 	Vec3f mTranslate;
 	vector<Leap::Frame> deserializedFrames;
 	bool mStaticPosHand, mStaticOrientHand;
-	bool isRecording;
+	bool isRecording,isReplaying;
 
 
 private slots:
 	void startRecording();
 	void importFile();
+	void lastFrame();
+	void nextFrame();
+
 private:
 	QTimer myTimer;
 };

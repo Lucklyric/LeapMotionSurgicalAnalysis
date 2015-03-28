@@ -32,6 +32,8 @@ public:
     QWidget *centralWidget;
     LeapQtGl *mLeapWidget;
     QPushButton *recordingButton;
+    QPushButton *pushButton;
+    QPushButton *pushButton_2;
     QMenuBar *menuBar;
     QMenu *menuFile;
     QToolBar *mainToolBar;
@@ -57,6 +59,12 @@ public:
         recordingButton = new QPushButton(centralWidget);
         recordingButton->setObjectName(QStringLiteral("recordingButton"));
         recordingButton->setGeometry(QRect(0, 730, 111, 23));
+        pushButton = new QPushButton(centralWidget);
+        pushButton->setObjectName(QStringLiteral("pushButton"));
+        pushButton->setGeometry(QRect(110, 730, 31, 23));
+        pushButton_2 = new QPushButton(centralWidget);
+        pushButton_2->setObjectName(QStringLiteral("pushButton_2"));
+        pushButton_2->setGeometry(QRect(140, 730, 31, 23));
         LeapMotionQtClass->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(LeapMotionQtClass);
         menuBar->setObjectName(QStringLiteral("menuBar"));
@@ -77,6 +85,8 @@ public:
         retranslateUi(LeapMotionQtClass);
         QObject::connect(recordingButton, SIGNAL(clicked()), mLeapWidget, SLOT(startRecording()));
         QObject::connect(actionImport, SIGNAL(triggered()), mLeapWidget, SLOT(importFile()));
+        QObject::connect(pushButton, SIGNAL(clicked()), mLeapWidget, SLOT(lastFrame()));
+        QObject::connect(pushButton_2, SIGNAL(clicked()), mLeapWidget, SLOT(nextFrame()));
 
         QMetaObject::connectSlotsByName(LeapMotionQtClass);
     } // setupUi
@@ -86,6 +96,8 @@ public:
         LeapMotionQtClass->setWindowTitle(QApplication::translate("LeapMotionQtClass", "LeapMotionQt", 0));
         actionImport->setText(QApplication::translate("LeapMotionQtClass", "Import", 0));
         recordingButton->setText(QApplication::translate("LeapMotionQtClass", "Start Recording", 0));
+        pushButton->setText(QApplication::translate("LeapMotionQtClass", "<", 0));
+        pushButton_2->setText(QApplication::translate("LeapMotionQtClass", ">", 0));
         menuFile->setTitle(QApplication::translate("LeapMotionQtClass", "File", 0));
     } // retranslateUi
 

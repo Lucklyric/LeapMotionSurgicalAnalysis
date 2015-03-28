@@ -15,10 +15,12 @@ void LeapQtGl::initializeGL(){
 	std::cout << "initialized" << std::endl;
 
 	isRecording = false;
+	isReplaying = false;
 	mStaticOrientHand = false;
 	mStaticPosHand = false;
 
 	mScale = 1;
+	mRecordingFrameIndex = 0;
 	mTranslate.set(0, 200, 0);
 	// Set up OpenGL
 	gl::enableAlphaBlending();
@@ -38,7 +40,11 @@ void LeapQtGl::initializeGL(){
 
 void LeapQtGl::updateGL(){
 	QGLWidget::updateGL();
-	mLeap->update();
+	if (isReplaying){
+		mFrame = deserializedFrames[mRecordingFrameIndex];
+	}else{
+		mLeap->update();
+	}
 }
 
 void LeapQtGl::paintGL(){
@@ -266,14 +272,16 @@ void LeapQtGl::importFile(){
 	QString qName = QFileDialog::getOpenFileName();
 	std::string fileName = qName.toUtf8().constData();
 	cout << fileName<< endl;
-	std::ifstream in(fileName, std::fstream::in);
+	std::ifstream in(fileName, std::fstream::in | std::fstream::binary);
 	std::string contents;
 	if (in)
 	{
+		long l, m;
 		in.seekg(0, std::ios::beg);
 		long nextBlockSize = 0;
 		in >> nextBlockSize;
-		std::cout << nextBlockSize << std::endl;
+		std::cout << "Start Load File.." << std::endl;
+
 		while (!in.eof())
 		{
 			contents.resize(nextBlockSize);
@@ -287,9 +295,23 @@ void LeapQtGl::importFile(){
 	}
 	else if (errno){
 		std::cout << "Error: " << errno << std::endl;
-		//std::cout << "Couldn't open " << fileName.toStdWString() << " for reading." << std::endl;
+
 	}
-	std::cout << deserializedFrames.size() << std::endl;
+	isReplaying = true;
+	mRecordingFrameIndex = 0;
+	std::cout << "Loaded File No. of frame "<<deserializedFrames.size() << std::endl;
+}
+
+void LeapQtGl::lastFrame(){
+	if (mRecordingFrameIndex >= 0){
+		mRecordingFrameIndex--;
+	}
+}
+
+void LeapQtGl::nextFrame(){
+	if (mRecordingFrameIndex <= deserializedFrames.size()-1){
+		mRecordingFrameIndex++;
+	}
 }
 
 void LeapQtGl::resizeGL(int w, int h){

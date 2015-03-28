@@ -186,6 +186,7 @@ namespace LeapMotion {
 		if (mRecording){
 			this->recordingCount++;
 			mDataRecorder->ParseCurrentFrametoFile(controller.frame());
+			//mRecording = false;
 		}
     }
     

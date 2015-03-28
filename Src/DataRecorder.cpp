@@ -14,7 +14,35 @@
 #include <Windows.h>
 #include <filesystem>
 #include <boost\filesystem.hpp>
+
 using namespace std;
+std::string string_To_UTF8(const std::string & str)
+{
+	int nwLen = ::MultiByteToWideChar(CP_ACP, 0, str.c_str(), -1, NULL, 0);
+
+	wchar_t * pwBuf = new wchar_t[nwLen + 1];//一定要加1，不然会出现尾巴  
+	ZeroMemory(pwBuf, nwLen * 2 + 2);
+
+	::MultiByteToWideChar(CP_ACP, 0, str.c_str(), str.length(), pwBuf, nwLen);
+
+	int nLen = ::WideCharToMultiByte(CP_UTF8, 0, pwBuf, -1, NULL, NULL, NULL, NULL);
+
+	char * pBuf = new char[nLen + 1];
+	ZeroMemory(pBuf, nLen + 1);
+
+	::WideCharToMultiByte(CP_UTF8, 0, pwBuf, nwLen, pBuf, nLen, NULL, NULL);
+
+	std::string retStr(pBuf);
+
+	delete[]pwBuf;
+	delete[]pBuf;
+
+	pwBuf = NULL;
+	pBuf = NULL;
+
+	return retStr;
+}
+
 
 DataRecorder::DataRecorder(){
     this->isWriting = false;
@@ -26,7 +54,6 @@ DataRecorder::DataRecorder(){
 
 void DataRecorder::ParseCurrentFrametoFile(Leap::Frame currentFrame){
 	if (!isWriting){
-	
 		boost::filesystem::create_directory(boost::filesystem::current_path() / "Output");
         time_t t = time(0);   // get time now
 		struct tm now;
@@ -50,9 +77,11 @@ void DataRecorder::ParseCurrentFrametoFile(Leap::Frame currentFrame){
         isWriting = true;
         currentFrameIndex = 0;
     }
-    fstream out(currentFileName, std::ios_base::app | std::ios_base::out);
+	std::fstream out(currentFileName, std::ios_base::app | std::ios_base::out |std::ios::binary);
+
     if(out)
     {
+
         Leap::Frame frameToSerialize = currentFrame;
         std::string serialized = frameToSerialize.serialize();
 		out << (long)serialized.length() << serialized;

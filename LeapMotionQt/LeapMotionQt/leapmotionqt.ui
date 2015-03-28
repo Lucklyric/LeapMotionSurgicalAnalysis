@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1171</width>
-    <height>815</height>
+    <height>806</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -41,6 +41,32 @@
     </property>
     <property name="text">
      <string>Start Recording</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton">
+    <property name="geometry">
+     <rect>
+      <x>110</x>
+      <y>730</y>
+      <width>31</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>&lt;</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_2">
+    <property name="geometry">
+     <rect>
+      <x>140</x>
+      <y>730</y>
+      <width>31</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>&gt;</string>
     </property>
    </widget>
   </widget>
@@ -86,6 +112,8 @@
    <slots>
     <slot>startRecording()</slot>
     <slot>importFile()</slot>
+    <slot>lastFrame()</slot>
+    <slot>nextFrame()</slot>
    </slots>
   </customwidget>
  </customwidgets>
@@ -122,6 +150,38 @@
     <hint type="destinationlabel">
      <x>580</x>
      <y>392</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton</sender>
+   <signal>clicked()</signal>
+   <receiver>mLeapWidget</receiver>
+   <slot>lastFrame()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>127</x>
+     <y>771</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>125</x>
+     <y>683</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_2</sender>
+   <signal>clicked()</signal>
+   <receiver>mLeapWidget</receiver>
+   <slot>nextFrame()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>153</x>
+     <y>772</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>162</x>
+     <y>702</y>
     </hint>
    </hints>
   </connection>
