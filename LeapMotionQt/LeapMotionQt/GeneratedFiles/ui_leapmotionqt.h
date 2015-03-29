@@ -13,7 +13,10 @@
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QButtonGroup>
+#include <QtWidgets/QGridLayout>
+#include <QtWidgets/QGroupBox>
 #include <QtWidgets/QHeaderView>
+#include <QtWidgets/QLabel>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMenuBar>
@@ -31,6 +34,10 @@ public:
     QAction *actionImport;
     QWidget *centralWidget;
     LeapQtGl *mLeapWidget;
+    QGroupBox *mGeneralInfo;
+    QGridLayout *gridLayout;
+    QLabel *ldFps;
+    QLabel *dFps;
     QPushButton *recordingButton;
     QPushButton *pushButton;
     QPushButton *pushButton_2;
@@ -43,19 +50,40 @@ public:
     {
         if (LeapMotionQtClass->objectName().isEmpty())
             LeapMotionQtClass->setObjectName(QStringLiteral("LeapMotionQtClass"));
-        LeapMotionQtClass->resize(1171, 815);
+        LeapMotionQtClass->resize(1171, 806);
+        LeapMotionQtClass->setStyleSheet(QStringLiteral(""));
         actionImport = new QAction(LeapMotionQtClass);
         actionImport->setObjectName(QStringLiteral("actionImport"));
         centralWidget = new QWidget(LeapMotionQtClass);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         mLeapWidget = new LeapQtGl(centralWidget);
         mLeapWidget->setObjectName(QStringLiteral("mLeapWidget"));
-        mLeapWidget->setGeometry(QRect(0, -1, 1161, 721));
+        mLeapWidget->setGeometry(QRect(0, -1, 1161, 731));
         QSizePolicy sizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
         sizePolicy.setHeightForWidth(mLeapWidget->sizePolicy().hasHeightForWidth());
         mLeapWidget->setSizePolicy(sizePolicy);
+        mLeapWidget->setStyleSheet(QStringLiteral("background:rgb(0, 0, 0)"));
+        mGeneralInfo = new QGroupBox(mLeapWidget);
+        mGeneralInfo->setObjectName(QStringLiteral("mGeneralInfo"));
+        mGeneralInfo->setGeometry(QRect(10, 20, 121, 51));
+        mGeneralInfo->setStyleSheet(QStringLiteral(""));
+        gridLayout = new QGridLayout(mGeneralInfo);
+        gridLayout->setSpacing(6);
+        gridLayout->setContentsMargins(11, 11, 11, 11);
+        gridLayout->setObjectName(QStringLiteral("gridLayout"));
+        ldFps = new QLabel(mGeneralInfo);
+        ldFps->setObjectName(QStringLiteral("ldFps"));
+
+        gridLayout->addWidget(ldFps, 0, 0, 1, 1);
+
+        dFps = new QLabel(mGeneralInfo);
+        dFps->setObjectName(QStringLiteral("dFps"));
+        dFps->setStyleSheet(QStringLiteral("color:rgb(255, 255, 255)"));
+
+        gridLayout->addWidget(dFps, 0, 1, 1, 1);
+
         recordingButton = new QPushButton(centralWidget);
         recordingButton->setObjectName(QStringLiteral("recordingButton"));
         recordingButton->setGeometry(QRect(0, 730, 111, 23));
@@ -95,6 +123,9 @@ public:
     {
         LeapMotionQtClass->setWindowTitle(QApplication::translate("LeapMotionQtClass", "LeapMotionQt", 0));
         actionImport->setText(QApplication::translate("LeapMotionQtClass", "Import", 0));
+        mGeneralInfo->setTitle(QString());
+        ldFps->setText(QApplication::translate("LeapMotionQtClass", "<html><head/><body><p><span style=\" color:#ffffff;\">deviceFps:</span></p></body></html>", 0));
+        dFps->setText(QApplication::translate("LeapMotionQtClass", "0", 0));
         recordingButton->setText(QApplication::translate("LeapMotionQtClass", "Start Recording", 0));
         pushButton->setText(QApplication::translate("LeapMotionQtClass", "<", 0));
         pushButton_2->setText(QApplication::translate("LeapMotionQtClass", ">", 0));

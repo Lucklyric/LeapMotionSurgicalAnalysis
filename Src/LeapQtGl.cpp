@@ -5,6 +5,7 @@
 #include "cinder/gl/gl.h"
 #include "cinder/gl/Texture.h"
 #include "cinder/Quaternion.h"
+#include "leapmotionqt.h"
 #define __BONES__
 using namespace Leap;
 LeapQtGl::LeapQtGl(QWidget *parent) : QGLWidget(parent){
@@ -40,6 +41,7 @@ void LeapQtGl::initializeGL(){
 
 void LeapQtGl::updateGL(){
 	QGLWidget::updateGL();
+	updateGenearlInfo();
 	if (isReplaying){
 		mFrame = deserializedFrames[mRecordingFrameIndex];
 	}else{
@@ -314,6 +316,10 @@ void LeapQtGl::nextFrame(){
 	}
 }
 
+void LeapQtGl::updateGenearlInfo(){
+	LeapMotionQt* thisParent = dynamic_cast<LeapMotionQt*>(this->mParent);
+	thisParent->ui.dFps->setText(QString::number(mLeap->returnDeviceFrequency()));
+}
 void LeapQtGl::resizeGL(int w, int h){
 	glViewport(0, 0, w, h);
 }

@@ -13,7 +13,7 @@ public:
 	LeapMotionQt(QWidget *parent = 0);
 	~LeapMotionQt();
 
-private:
+public:
 	Ui::LeapMotionQtClass ui;
 	
 };

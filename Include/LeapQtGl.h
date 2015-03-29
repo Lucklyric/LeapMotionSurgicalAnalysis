@@ -25,11 +25,12 @@ public:
 	void updateGL();
 	void drawHands();
 	void drawHand(Leap::Hand &hand, Vec3f position);
-
+	void updateGenearlInfo();
 	void 					onFrame(Leap::Frame frame);
 	LeapMotion::DeviceRef	mLeap;
 	Leap::Frame				mFrame;
 	ci::CameraPersp			mCamera;
+	QWidget*				mParent;
 	Quatf mObjOrientation;
 	float mScale;
 	long int mRecordingFrameIndex;
@@ -37,6 +38,7 @@ public:
 	vector<Leap::Frame> deserializedFrames;
 	bool mStaticPosHand, mStaticOrientHand;
 	bool isRecording,isReplaying;
+
 
 
 private slots:
