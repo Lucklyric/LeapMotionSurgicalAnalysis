@@ -35,7 +35,9 @@
  */
 
 #pragma once
-
+#ifdef __GL_H__
+#undef __GL_H__
+#endif
 #include "../Include/Leap.h"
 #include "../include/DataRecorder.h"
 #include <mutex>

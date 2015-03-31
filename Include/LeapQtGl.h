@@ -1,7 +1,9 @@
-#pragma once
+﻿#pragma once 
+
 #ifdef __GL_H__
 #undef __GL_H__
 #endif
+
 #include "cinder/gl/gl.h"
 #include "cinder/gl/Texture.h"
 #include "cinder/Quaternion.h"
@@ -11,6 +13,8 @@
 #include <cinder\Camera.h>
 #include <QtWidgets/QPushButton>
 #include <vector>
+#include <boost/filesystem.hpp>
+
 using namespace ci;
 class LeapQtGl :
 	public QGLWidget
@@ -37,11 +41,10 @@ public:
 	Vec3f mTranslate;
 	vector<Leap::Frame> deserializedFrames;
 	bool mStaticPosHand, mStaticOrientHand;
-	bool isRecording,isReplaying;
+	bool isRecording, isReplaying;
 
 
-
-private slots:
+	private slots:
 	void startRecording();
 	void importFile();
 	void lastFrame();
@@ -50,4 +53,3 @@ private slots:
 private:
 	QTimer myTimer;
 };
-

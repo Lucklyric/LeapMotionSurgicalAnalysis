@@ -1,18 +1,20 @@
+
 #include "..\Include\LeapQtGl.h"
 #include <stdio.h>
 #include <iostream>
 #include <QtWidgets\QFileDialog>
-#include "cinder/gl/gl.h"
-#include "cinder/gl/Texture.h"
-#include "cinder/Quaternion.h"
 #include "leapmotionqt.h"
 #define __BONES__
 using namespace Leap;
+
 LeapQtGl::LeapQtGl(QWidget *parent) : QGLWidget(parent){
-	
+	mParent = parent;
 }
 
+
 void LeapQtGl::initializeGL(){
+
+
 	std::cout << "initialized" << std::endl;
 
 	isRecording = false;
@@ -36,10 +38,11 @@ void LeapQtGl::initializeGL(){
 	mLeap = LeapMotion::Device::create();
 	mLeap->connectEventHandler(&LeapQtGl::onFrame, this);
 	connect(&myTimer, SIGNAL(timeout()), this, SLOT(updateGL()));
-	myTimer.start(16);
+	myTimer.start(10);
 }
 
 void LeapQtGl::updateGL(){
+	
 	QGLWidget::updateGL();
 	updateGenearlInfo();
 	if (isReplaying){

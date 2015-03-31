@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1171</width>
-    <height>806</height>
+    <width>1202</width>
+    <height>665</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -22,8 +22,8 @@
      <rect>
       <x>0</x>
       <y>-1</y>
-      <width>1161</width>
-      <height>731</height>
+      <width>761</width>
+      <height>591</height>
      </rect>
     </property>
     <property name="sizePolicy">
@@ -75,7 +75,7 @@
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>730</y>
+      <y>590</y>
       <width>111</width>
       <height>23</height>
      </rect>
@@ -88,7 +88,7 @@
     <property name="geometry">
      <rect>
       <x>110</x>
-      <y>730</y>
+      <y>590</y>
       <width>31</width>
       <height>23</height>
      </rect>
@@ -101,7 +101,7 @@
     <property name="geometry">
      <rect>
       <x>140</x>
-      <y>730</y>
+      <y>590</y>
       <width>31</width>
       <height>23</height>
      </rect>
@@ -110,13 +110,23 @@
      <string>&gt;</string>
     </property>
    </widget>
+   <widget class="CanonQtCamera" name="widget" native="true">
+    <property name="geometry">
+     <rect>
+      <x>760</x>
+      <y>0</y>
+      <width>441</width>
+      <height>581</height>
+     </rect>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1171</width>
+     <width>1202</width>
      <height>21</height>
     </rect>
    </property>
@@ -157,6 +167,12 @@
     <slot>nextFrame()</slot>
    </slots>
   </customwidget>
+  <customwidget>
+   <class>CanonQtCamera</class>
+   <extends>QWidget</extends>
+   <header>CanonQtCamera.h</header>
+   <container>1</container>
+  </customwidget>
  </customwidgets>
  <resources>
   <include location="leapmotionqt.qrc"/>
@@ -170,11 +186,11 @@
    <hints>
     <hint type="sourcelabel">
      <x>60</x>
-     <y>769</y>
+     <y>645</y>
     </hint>
     <hint type="destinationlabel">
      <x>74</x>
-     <y>668</y>
+     <y>622</y>
     </hint>
    </hints>
   </connection>
@@ -202,11 +218,11 @@
    <hints>
     <hint type="sourcelabel">
      <x>127</x>
-     <y>771</y>
+     <y>645</y>
     </hint>
     <hint type="destinationlabel">
      <x>125</x>
-     <y>683</y>
+     <y>622</y>
     </hint>
    </hints>
   </connection>
@@ -218,13 +234,16 @@
    <hints>
     <hint type="sourcelabel">
      <x>153</x>
-     <y>772</y>
+     <y>645</y>
     </hint>
     <hint type="destinationlabel">
      <x>162</x>
-     <y>702</y>
+     <y>622</y>
     </hint>
    </hints>
   </connection>
  </connections>
+ <slots>
+  <slot>startRecording()</slot>
+ </slots>
 </ui>

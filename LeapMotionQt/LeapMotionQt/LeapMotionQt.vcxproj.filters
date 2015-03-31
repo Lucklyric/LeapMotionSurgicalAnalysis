@@ -36,6 +36,9 @@
     <Filter Include="Cinder-Leap">
       <UniqueIdentifier>{ea7f1e60-50e4-480c-b5f2-1314a86d1487}</UniqueIdentifier>
     </Filter>
+    <Filter Include="CananCamera">
+      <UniqueIdentifier>{efc51b48-2cca-4e47-b0bd-7f8046fbe7d7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -68,6 +71,30 @@
     <ClCompile Include="GeneratedFiles\Release\moc_LeapQtGl.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Src\CanonQtCamera.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\CanonCamera\Camera.cpp">
+      <Filter>CananCamera</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\CanonCamera\CameraBrowser.cpp">
+      <Filter>CananCamera</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_CanonQtCamera.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_CanonQtCamera.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\CameraWorker.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_CameraWorker.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_CameraWorker.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="leapmotionqt.h">
@@ -80,6 +107,12 @@
       <Filter>Resource Files</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\Include\LeapQtGl.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\Include\CanonQtCamera.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\Include\CameraWorker.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
   </ItemGroup>
@@ -98,6 +131,15 @@
     </ClInclude>
     <ClInclude Include="..\..\Cinder-Leap\Cinder-LeapMotion.h">
       <Filter>Cinder-Leap</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\CanonCamera\Camera.h">
+      <Filter>CananCamera</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\CanonCamera\CameraBrowser.h">
+      <Filter>CananCamera</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\CanonCamera\EDSDKcpp.h">
+      <Filter>CananCamera</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
