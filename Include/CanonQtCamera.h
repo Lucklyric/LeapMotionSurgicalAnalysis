@@ -25,5 +25,8 @@ public:
 private:
 	QTimer myTimer;
 	CameraWorker* myWorker;
+signals:
+	void startWorker();
+	void killWorkerTimer();
 };
 

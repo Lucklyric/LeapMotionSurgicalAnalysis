@@ -14,6 +14,8 @@
 #include <QtWidgets/QPushButton>
 #include <vector>
 #include <boost/filesystem.hpp>
+#include <QMouseEvent>
+#include <QWheelEvent>
 
 using namespace ci;
 class LeapQtGl :
@@ -42,7 +44,17 @@ public:
 	vector<Leap::Frame> deserializedFrames;
 	bool mStaticPosHand, mStaticOrientHand;
 	bool isRecording, isReplaying;
+	/** Handles mouse press events on the QGLWidget. */
+	void mousePressEvent(QMouseEvent *pEvent);
 
+	/** Handles mouse move events on the QGLWidget. */
+	void mouseMoveEvent(QMouseEvent *pEvent);
+
+	/** Zoomin in and out of the cube */
+	void wheelEvent(QWheelEvent * pEvent);
+
+	/** reaction on a key press */
+	void keyPressEvent(QKeyEvent *pEvent);
 
 	private slots:
 	void startRecording();
@@ -52,4 +64,17 @@ public:
 
 private:
 	QTimer myTimer;
+	GLfloat fRotationX;
+	GLfloat fRotationY;
+	GLfloat fRotationZ;
+
+	GLfloat fMoveUpDown;
+	GLfloat fMoveLeftRight;
+	GLfloat fMoveInOut;
+
+	QSize viewport_size;					//< current size of the viewport.
+	QPoint lastPos;							//< last mose position
+
+	/** Change settings for rendering. */
+	void setRotation(GLfloat _x, GLfloat _y, GLfloat _z);
 };

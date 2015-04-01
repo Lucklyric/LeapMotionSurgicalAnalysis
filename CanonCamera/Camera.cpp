@@ -10,7 +10,7 @@
 
 namespace EDSDK {
     
-#pragma mark CAMERA FILE
+#pragma camerFile
     
     CameraFileRef CameraFile::create(const EdsDirectoryItemRef& directoryItem) {
         return CameraFileRef(new CameraFile(directoryItem))->shared_from_this();
@@ -36,7 +36,7 @@ namespace EDSDK {
         mDirectoryItem = NULL;
     }
     
-#pragma mark - CAMERA
+#pragma CAMERA
     
     CameraRef Camera::create(const EdsCameraRef& camera) {
         return CameraRef(new Camera(camera))->shared_from_this();
@@ -87,7 +87,7 @@ namespace EDSDK {
         mCamera = NULL;
     }
     
-#pragma mark -
+#pragma 
     
     void Camera::connectRemovedHandler(const std::function<void(CameraRef)>& handler) {
         mRemovedHandler = handler;

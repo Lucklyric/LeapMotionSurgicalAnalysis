@@ -1,22 +1,28 @@
 #include "..\Include\CameraWorker.h"
+#include <QThread>
 
-
-CameraWorker::CameraWorker(QObject *parent) :
-QObject(parent)
+CameraWorker::CameraWorker()
 {
 	isNewFrame = false;
 	CameraBrowser::instance()->connectAddedHandler(&CameraWorker::browserDidAddCamera, this);
 	CameraBrowser::instance()->connectRemovedHandler(&CameraWorker::browserDidRemoveCamera, this);
 	CameraBrowser::instance()->connectEnumeratedHandler(&CameraWorker::browserDidEnumerateCameras, this);
 	CameraBrowser::instance()->start();
+
+	std::cout << "init" << this->thread() << std::endl;
 }
 
+CameraWorker::~CameraWorker(){
+
+}
 
 void CameraWorker::updateImage(){
+	//std::cout << "AcurThread" << this->thread() << std::endl;
+
 	QImage img;
 	if (mCamera != NULL && mCamera->hasOpenSession() && mCamera->isLiveViewing()) {
 		mCamera->requestDownloadEvfData(img);
-		//std::cout << "QImage: " << img.width() << " x " << img.height() << std::endl;
+		std::cout << "QImage: " << img.width() << " x " << img.height() << std::endl;
 	}
 	lastImage = img;
 	isNewFrame = true;
@@ -34,9 +40,14 @@ void CameraWorker::killTheTimer(){
 
 
 void CameraWorker::startWorking(){
-	mCamera->toggleLiveView();
-	connect(&myTimer, SIGNAL(timeout()), this, SLOT(updateImage()),Qt::DirectConnection);
-	myTimer.start(10);
+	std::cout << "AcurThread" << this->thread()<< std::endl;
+
+	if (mCamera != NULL){
+		mCamera->toggleLiveView();
+		connect(&myTimer, SIGNAL(timeout()), this, SLOT(updateImage()));
+		myTimer.start();
+	}
+	emit cameraStarted();
 }
 
 #pragma mark - CAMERA BROWSER

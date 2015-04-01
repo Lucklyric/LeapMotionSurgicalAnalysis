@@ -10,13 +10,11 @@ class CameraWorker : public QObject
 {
 	Q_OBJECT
 public:
-	explicit CameraWorker(QObject *parent = 0);
-
+    CameraWorker();
+	~CameraWorker();
 	QImage lastFrameImage();
 	bool isNewFrame;
-	public slots :
-		void startWorking();
-		void updateImage();
+
 public:
 	CameraRef mCamera;
 	void browserDidAddCamera(CameraRef camera);
@@ -24,10 +22,16 @@ public:
 	void browserDidEnumerateCameras();
 	void didRemoveCamera(CameraRef camera);
 	void didAddFile(CameraRef camera, CameraFileRef file);
-	void killTheTimer();
+	
 	QImage lastImage;
-private:
+public:
 	QTimer myTimer;
 	QMutex myLock;
+	public slots :
+	void startWorking();
+	void updateImage();
+	void killTheTimer();
+signals:
+	void cameraStarted();
 };
 

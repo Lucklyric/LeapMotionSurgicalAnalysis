@@ -58,11 +58,17 @@ void LeapQtGl::paintGL(){
 	
 	gl::clear(ColorA(0, 0, 0, 0.0));
 
-
-	glPushAttrib(GL_ALL_ATTRIB_BITS);
+	
 	gl::pushMatrices();
 
-	
+	glTranslatef(fMoveLeftRight, fMoveUpDown, fMoveInOut);
+
+	glRotatef(fRotationX, 1.0f, 0.0f, 0.0f);
+	glRotatef(fRotationY, 0.0f, 1.0f, 0.0f);
+	glRotatef(fRotationZ, 0.0f, 0.0f, 1.0f);
+
+
+	glPushAttrib(GL_ALL_ATTRIB_BITS);
 	drawHands();
 
 	gl::popMatrices();
@@ -329,4 +335,102 @@ void LeapQtGl::resizeGL(int w, int h){
 
 void LeapQtGl::onFrame(Leap::Frame frame){
 	mFrame = frame;
+}
+
+//==============================================================================	mouse Press Event
+void LeapQtGl::mousePressEvent(QMouseEvent *pEvent)
+{
+	lastPos = pEvent->pos();
+}
+
+
+
+//==============================================================================	mouse Move Event
+void LeapQtGl::mouseMoveEvent(QMouseEvent *pEvent)
+{
+	GLfloat dx = (GLfloat)(pEvent->x() - lastPos.x()) / viewport_size.width();
+	GLfloat dy = (GLfloat)(pEvent->y() - lastPos.y()) / viewport_size.height();
+
+	qDebug() << dx;
+	qDebug() << dy << "\n";
+
+	if (pEvent->buttons() & Qt::LeftButton)
+	{
+		setRotation(180 * dy, 180 * dx, 0.0);
+	}
+	else if (pEvent->buttons() & Qt::RightButton)
+	{
+		setRotation(180 * dy, 0.0, 180 * dx);
+	}
+	else
+	{
+	} // do nothing //
+
+	update();
+	lastPos = pEvent->pos();
+}
+
+
+
+//==============================================================================	set Rotation
+void LeapQtGl::setRotation(GLfloat _x, GLfloat _y, GLfloat _z)
+{
+	fRotationX += _x;
+	fRotationY += _y;
+	fRotationZ += _z;
+}
+
+
+
+//==============================================================================	wheel Event
+void LeapQtGl::wheelEvent(QWheelEvent * pEvent)
+{
+	fMoveInOut -= (GLfloat)pEvent->delta() / 80.0;
+	update();
+}
+
+
+
+//==============================================================================	key Press Event
+void LeapQtGl::keyPressEvent(QKeyEvent *pEvent)
+{
+	switch (pEvent->key())
+	{
+	case Qt::Key_Escape:
+		exit(0);
+		break;
+
+	case Qt::Key_R:
+		fRotationX = 0.0f;
+		fRotationY = 0.0f;
+		fRotationZ = 0.0f;
+		fMoveUpDown = 0.0f;
+		fMoveLeftRight = 0.0f;
+		fMoveInOut = -15.0f;
+		break;
+
+	case Qt::Key_Up:
+	case Qt::Key_W:
+		fMoveUpDown += 0.6;
+		break;
+
+	case Qt::Key_Down:
+	case Qt::Key_S:
+		fMoveUpDown -= 0.6;
+		break;
+
+	case Qt::Key_Left:
+	case Qt::Key_A:
+		fMoveLeftRight -= 0.6;
+		break;
+
+	case Qt::Key_Right:
+	case Qt::Key_D:
+		fMoveLeftRight += 0.6;
+		break;
+
+	default:
+		LeapQtGl::keyPressEvent(pEvent);
+	}
+	update();
 }

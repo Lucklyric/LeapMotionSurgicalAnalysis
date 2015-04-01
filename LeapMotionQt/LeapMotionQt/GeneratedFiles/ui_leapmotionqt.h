@@ -43,6 +43,7 @@ public:
     QPushButton *pushButton;
     QPushButton *pushButton_2;
     CanonQtCamera *widget;
+    QLabel *label;
     QMenuBar *menuBar;
     QMenu *menuFile;
     QToolBar *mainToolBar;
@@ -52,7 +53,7 @@ public:
     {
         if (LeapMotionQtClass->objectName().isEmpty())
             LeapMotionQtClass->setObjectName(QStringLiteral("LeapMotionQtClass"));
-        LeapMotionQtClass->resize(1202, 665);
+        LeapMotionQtClass->resize(1202, 655);
         LeapMotionQtClass->setStyleSheet(QStringLiteral(""));
         actionImport = new QAction(LeapMotionQtClass);
         actionImport->setObjectName(QStringLiteral("actionImport"));
@@ -88,16 +89,21 @@ public:
 
         recordingButton = new QPushButton(centralWidget);
         recordingButton->setObjectName(QStringLiteral("recordingButton"));
-        recordingButton->setGeometry(QRect(0, 590, 111, 23));
+        recordingButton->setGeometry(QRect(760, 380, 111, 23));
         pushButton = new QPushButton(centralWidget);
         pushButton->setObjectName(QStringLiteral("pushButton"));
-        pushButton->setGeometry(QRect(110, 590, 31, 23));
+        pushButton->setGeometry(QRect(870, 380, 31, 23));
         pushButton_2 = new QPushButton(centralWidget);
         pushButton_2->setObjectName(QStringLiteral("pushButton_2"));
-        pushButton_2->setGeometry(QRect(140, 590, 31, 23));
+        pushButton_2->setGeometry(QRect(900, 380, 31, 23));
         widget = new CanonQtCamera(centralWidget);
         widget->setObjectName(QStringLiteral("widget"));
-        widget->setGeometry(QRect(760, 0, 441, 581));
+        widget->setGeometry(QRect(760, 0, 441, 381));
+        widget->setAutoFillBackground(false);
+        widget->setStyleSheet(QStringLiteral("background-color: rgb(143, 250, 255)"));
+        label = new QLabel(widget);
+        label->setObjectName(QStringLiteral("label"));
+        label->setGeometry(QRect(180, 190, 101, 16));
         LeapMotionQtClass->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(LeapMotionQtClass);
         menuBar->setObjectName(QStringLiteral("menuBar"));
@@ -134,6 +140,7 @@ public:
         recordingButton->setText(QApplication::translate("LeapMotionQtClass", "Start Recording", 0));
         pushButton->setText(QApplication::translate("LeapMotionQtClass", "<", 0));
         pushButton_2->setText(QApplication::translate("LeapMotionQtClass", ">", 0));
+        label->setText(QApplication::translate("LeapMotionQtClass", "No Camera Signal", 0));
         menuFile->setTitle(QApplication::translate("LeapMotionQtClass", "File", 0));
     } // retranslateUi
 
