@@ -46,7 +46,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <PreprocessorDefinitions>DISABLE_LIBRARY_FEATURES;UNICODE;WIN32;WIN64;QT_DLL;QT_CORE_LIB;QT_GUI_LIB;QT_OPENGL_LIB;QT_WIDGETS_LIB;QT_MULTIMEDIA_LIB;QT_MULTIMEDIAWIDGETS_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>D:\Code\LeapMotionQt\CanonCamera;$(CANON_PATH)\Header;$(CINDER_PATH)\boost;$(CINDER_PATH)\include;..\..\Cinder-Leap;..\..\Include;$(LEAP_SDK)\include;$(Eigen);.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtOpenGL;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtMultimedia;$(QTDIR)\include\QtMultimediaWidgets;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\Code\LeapMotionQt\QtImageDecoder;D:\Library\ffmpeg_header;D:\Code\LeapMotionQt\CanonCamera;$(CANON_PATH)\Header;$(CINDER_PATH)\boost;$(CINDER_PATH)\include;..\..\Cinder-Leap;..\..\Include;$(LEAP_SDK)\include;$(Eigen);.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtOpenGL;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtMultimedia;$(QTDIR)\include\QtMultimediaWidgets;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Disabled</Optimization>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -55,9 +55,9 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <OutputFile>$(OutDir)\$(ProjectName).exe</OutputFile>
-      <AdditionalLibraryDirectories>$(CANON_PATH)\Library;$(CINDER_PATH)\lib\msw\$(PlatformTarget);D:\Library\freeglut\lib;$(LEAP_SDK)\lib\x86;$(QTDIR)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>D:\Library\ffmpeg_lib_win32;$(CANON_PATH)\Library;$(CINDER_PATH)\lib\msw\$(PlatformTarget);D:\Library\freeglut\lib;$(LEAP_SDK)\lib\x86;$(QTDIR)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>qtmaind.lib;Qt5Cored.lib;Qt5Guid.lib;Qt5OpenGLd.lib;opengl32.lib;glew32.lib;Leap.lib;freeglut.lib;glu32.lib;Qt5Widgetsd.lib;cinder-$(PlatformToolset)_d.lib;EDSDK.lib;Qt5Multimediad.lib;Qt5MultimediaWidgetsd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>qtmaind.lib;Qt5Cored.lib;Qt5Guid.lib;Qt5OpenGLd.lib;opengl32.lib;glew32.lib;Leap.lib;freeglut.lib;glu32.lib;Qt5Widgetsd.lib;cinder-$(PlatformToolset)_d.lib;EDSDK.lib;Qt5Multimediad.lib;Qt5MultimediaWidgetsd.lib;avcodec.lib;avdevice.lib;avfilter.lib;avformat.lib;avutil.lib;postproc.lib;swscale.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <IgnoreSpecificDefaultLibraries>LIBCMT</IgnoreSpecificDefaultLibraries>
     </Link>
     <PostBuildEvent>
@@ -84,6 +84,7 @@
     <ClCompile Include="..\..\CanonCamera\Camera.cpp" />
     <ClCompile Include="..\..\CanonCamera\CameraBrowser.cpp" />
     <ClCompile Include="..\..\Cinder-Leap\Cinder-LeapMotion.cpp" />
+    <ClCompile Include="..\..\QtImageDecoder\QVideoEncoder.cpp" />
     <ClCompile Include="..\..\Src\CameraWorker.cpp" />
     <ClCompile Include="..\..\Src\CanonQtCamera.cpp" />
     <ClCompile Include="..\..\Src\DataRecorder.cpp" />
@@ -183,6 +184,8 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_DLL -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtOpenGL" "-I$(QTDIR)\include\QtWidgets"</Command>
     </CustomBuild>
+    <ClInclude Include="..\..\QtImageDecoder\ffmpeg.h" />
+    <ClInclude Include="..\..\QtImageDecoder\QVideoEncoder.h" />
     <ClInclude Include="GeneratedFiles\ui_leapmotionqt.h" />
   </ItemGroup>
   <ItemGroup>

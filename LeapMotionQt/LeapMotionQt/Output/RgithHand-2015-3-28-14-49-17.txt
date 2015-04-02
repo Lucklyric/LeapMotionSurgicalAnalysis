@@ -1,1 +1,0 @@
-SoftwareTimeStamp LeapTimeStamp  FrameID  HandDirection:X HandDirection:Y HandDirection:Z  PalmNorm:X PalmNorm:Y PalmNorm:Z  PalmPos:X PalmPos:Y PalmPos:Z  PalmVel:X PalmVel:Y PalmVel:Z Confidence

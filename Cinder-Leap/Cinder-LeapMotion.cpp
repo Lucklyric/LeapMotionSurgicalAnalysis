@@ -48,6 +48,7 @@
 #include <fstream>
 using namespace ci;
 #include <ctime>
+#include <thread>
 
 
 using namespace std;
@@ -186,16 +187,17 @@ namespace LeapMotion {
 		if (mRecording){
 			this->recordingCount++;
 			mDataRecorder->ParseCurrentFrametoFile(controller.frame());
-			//mRecording = false;
+			mRecording = false;
+			//std::thread recordData(&Listener::recordCurrentFrame,this);
 		}
     }
     
     void Listener::recordCurrentFrame(){
-		lock_guard<mutex> lock(*mMutex);
-        if (mRecording) {
-            this->recordingCount++;
-            mDataRecorder->ParseCurrentFrametoFile(mFrame);
-        }
+		cout << "BeforeRecording id" << std::this_thread::get_id() << endl;
+		//lock_guard<mutex> lock(*mMutex);
+       
+           // mDataRecorder->ParseCurrentFrametoFile(mFrame);
+        
     }
     
     
@@ -214,6 +216,7 @@ namespace LeapMotion {
     
     Device::Device()
     {
+		cout << "Device id" << std::this_thread::get_id() << endl;
         mListener.mMutex	= &mMutex;
         mController			= new Leap::Controller( mListener );
 

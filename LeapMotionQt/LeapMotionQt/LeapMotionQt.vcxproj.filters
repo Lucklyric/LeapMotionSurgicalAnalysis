@@ -39,6 +39,9 @@
     <Filter Include="CananCamera">
       <UniqueIdentifier>{efc51b48-2cca-4e47-b0bd-7f8046fbe7d7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="QImageEncoder">
+      <UniqueIdentifier>{cd489616-7135-4d58-a833-ee0c1a5a416c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -95,6 +98,9 @@
     <ClCompile Include="GeneratedFiles\Release\moc_CameraWorker.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\QtImageDecoder\QVideoEncoder.cpp">
+      <Filter>QImageEncoder</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="leapmotionqt.h">
@@ -140,6 +146,12 @@
     </ClInclude>
     <ClInclude Include="..\..\CanonCamera\EDSDKcpp.h">
       <Filter>CananCamera</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\QtImageDecoder\QVideoEncoder.h">
+      <Filter>QImageEncoder</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\QtImageDecoder\ffmpeg.h">
+      <Filter>QImageEncoder</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

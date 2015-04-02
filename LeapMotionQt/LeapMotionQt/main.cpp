@@ -1,3 +1,4 @@
+
 #include "leapmotionqt.h"
 #include <QtWidgets/QApplication>
 

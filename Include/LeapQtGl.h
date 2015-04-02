@@ -61,7 +61,8 @@ public:
 	void importFile();
 	void lastFrame();
 	void nextFrame();
-
+signals:
+	void callCameraUpdate();
 private:
 	QTimer myTimer;
 	GLfloat fRotationX;
@@ -77,4 +78,5 @@ private:
 
 	/** Change settings for rendering. */
 	void setRotation(GLfloat _x, GLfloat _y, GLfloat _z);
+
 };

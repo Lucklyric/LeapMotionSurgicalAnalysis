@@ -32,6 +32,6 @@ public:
 	void updateImage();
 	void killTheTimer();
 signals:
-	void cameraStarted();
+	//void cameraStarted();
 };
 

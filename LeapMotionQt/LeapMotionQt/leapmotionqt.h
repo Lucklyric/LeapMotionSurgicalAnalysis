@@ -11,6 +11,7 @@
 #include <QCameraInfo>
 #include <QDateTime>
 #include <Qdir>
+
 class LeapMotionQt : public QMainWindow
 {
 	Q_OBJECT

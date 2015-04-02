@@ -110,7 +110,7 @@
      <string>&gt;</string>
     </property>
    </widget>
-   <widget class="CanonQtCamera" name="widget" native="true">
+   <widget class="CanonQtCamera" name="mCamera" native="true">
     <property name="geometry">
      <rect>
       <x>760</x>
@@ -125,19 +125,6 @@
     <property name="styleSheet">
      <string notr="true">background-color: rgb(143, 250, 255)</string>
     </property>
-    <widget class="QLabel" name="label">
-     <property name="geometry">
-      <rect>
-       <x>180</x>
-       <y>190</y>
-       <width>91</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>No Camera Signal</string>
-     </property>
-    </widget>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
@@ -193,6 +180,7 @@
    <container>1</container>
    <slots>
     <signal>cameraConnected()</signal>
+    <slot>toggleRecording()</slot>
    </slots>
   </customwidget>
  </customwidgets>
@@ -261,6 +249,22 @@
     <hint type="destinationlabel">
      <x>162</x>
      <y>622</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>recordingButton</sender>
+   <signal>clicked()</signal>
+   <receiver>mCamera</receiver>
+   <slot>toggleRecording()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>829</x>
+     <y>421</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>862</x>
+     <y>329</y>
     </hint>
    </hints>
   </connection>

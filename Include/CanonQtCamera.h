@@ -10,6 +10,7 @@
 #include <QLabel>
 #include <QThread>
 #include "CameraWorker.h"
+#include <QDir>
 
 class CanonQtCamera : public QLabel
 {
@@ -18,13 +19,17 @@ public:
 	QThread workerThread;
 	explicit CanonQtCamera(QWidget* parent = 0);
 	~CanonQtCamera();
-	private slots:
-
+	public slots:
 	void updateCamera();
+	void toggleRecording();
 
 private:
-	QTimer myTimer;
+	bool isRecording;
+	//QTimer myTimer;
+	int recordingindex;
 	CameraWorker* myWorker;
+	//QVideoEncoder* myQVideoEncoder;
+	QImage mImage;
 signals:
 	void startWorker();
 	void killWorkerTimer();

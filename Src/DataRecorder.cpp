@@ -6,7 +6,6 @@
 //
 //
 
-#include <stdio.h>
 #include "DataRecorder.h"
 #include "Leap.h"
 #include "Cinder-LeapMotion.h"
@@ -53,6 +52,8 @@ DataRecorder::DataRecorder(){
 }
 
 void DataRecorder::ParseCurrentFrametoFile(Leap::Frame currentFrame){
+	//lock_guard<mutex> lock(mMutex);
+	cout <<"recording id"<<std::this_thread::get_id() << endl;
 	if (!isWriting){
 		boost::filesystem::create_directory(boost::filesystem::current_path() / "Output");
         time_t t = time(0);   // get time now

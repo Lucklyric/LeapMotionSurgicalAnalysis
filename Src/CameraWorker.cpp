@@ -13,7 +13,7 @@ CameraWorker::CameraWorker()
 }
 
 CameraWorker::~CameraWorker(){
-
+	std::cout <<"worker delete" << std::endl;
 }
 
 void CameraWorker::updateImage(){
@@ -22,7 +22,6 @@ void CameraWorker::updateImage(){
 	QImage img;
 	if (mCamera != NULL && mCamera->hasOpenSession() && mCamera->isLiveViewing()) {
 		mCamera->requestDownloadEvfData(img);
-		std::cout << "QImage: " << img.width() << " x " << img.height() << std::endl;
 	}
 	lastImage = img;
 	isNewFrame = true;
@@ -33,21 +32,18 @@ QImage CameraWorker::lastFrameImage(){
 }
 
 void CameraWorker::killTheTimer(){
-	myLock.lock();
 	myTimer.stop();
-	myLock.unlock();
 }
 
 
 void CameraWorker::startWorking(){
-	std::cout << "AcurThread" << this->thread()<< std::endl;
-
+	std::cout << "StartInWorker" << QThread::currentThread() << std::endl;
 	if (mCamera != NULL){
 		mCamera->toggleLiveView();
 		connect(&myTimer, SIGNAL(timeout()), this, SLOT(updateImage()));
-		myTimer.start();
+		myTimer.start(8);
 	}
-	emit cameraStarted();
+	//emit cameraStarted();
 }
 
 #pragma mark - CAMERA BROWSER

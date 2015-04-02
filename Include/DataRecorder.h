@@ -13,10 +13,13 @@
 #include <fstream>
 #include "Leap.h"
 #include <functional>
+#include <Mutex>
+#include <thread>
 using namespace std;
 class DataRecorder{
 public:
     bool isWriting;
+	mutex mMutex;
     string currentFileName;
     string currentLeftHandFileName;
     string currentRighthandFileName;

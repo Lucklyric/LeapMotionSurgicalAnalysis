@@ -26,6 +26,7 @@
 #include "EDSDK.h"
 #include <memory>
 #include <functional>
+
 namespace EDSDK {
 
 	typedef std::shared_ptr<class Camera> CameraRef;

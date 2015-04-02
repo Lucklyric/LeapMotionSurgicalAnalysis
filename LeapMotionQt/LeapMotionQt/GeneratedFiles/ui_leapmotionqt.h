@@ -42,8 +42,7 @@ public:
     QPushButton *recordingButton;
     QPushButton *pushButton;
     QPushButton *pushButton_2;
-    CanonQtCamera *widget;
-    QLabel *label;
+    CanonQtCamera *mCamera;
     QMenuBar *menuBar;
     QMenu *menuFile;
     QToolBar *mainToolBar;
@@ -96,14 +95,11 @@ public:
         pushButton_2 = new QPushButton(centralWidget);
         pushButton_2->setObjectName(QStringLiteral("pushButton_2"));
         pushButton_2->setGeometry(QRect(900, 380, 31, 23));
-        widget = new CanonQtCamera(centralWidget);
-        widget->setObjectName(QStringLiteral("widget"));
-        widget->setGeometry(QRect(760, 0, 441, 381));
-        widget->setAutoFillBackground(false);
-        widget->setStyleSheet(QStringLiteral("background-color: rgb(143, 250, 255)"));
-        label = new QLabel(widget);
-        label->setObjectName(QStringLiteral("label"));
-        label->setGeometry(QRect(180, 190, 101, 16));
+        mCamera = new CanonQtCamera(centralWidget);
+        mCamera->setObjectName(QStringLiteral("mCamera"));
+        mCamera->setGeometry(QRect(760, 0, 441, 381));
+        mCamera->setAutoFillBackground(false);
+        mCamera->setStyleSheet(QStringLiteral("background-color: rgb(143, 250, 255)"));
         LeapMotionQtClass->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(LeapMotionQtClass);
         menuBar->setObjectName(QStringLiteral("menuBar"));
@@ -126,6 +122,7 @@ public:
         QObject::connect(actionImport, SIGNAL(triggered()), mLeapWidget, SLOT(importFile()));
         QObject::connect(pushButton, SIGNAL(clicked()), mLeapWidget, SLOT(lastFrame()));
         QObject::connect(pushButton_2, SIGNAL(clicked()), mLeapWidget, SLOT(nextFrame()));
+        QObject::connect(recordingButton, SIGNAL(clicked()), mCamera, SLOT(toggleRecording()));
 
         QMetaObject::connectSlotsByName(LeapMotionQtClass);
     } // setupUi
@@ -140,7 +137,6 @@ public:
         recordingButton->setText(QApplication::translate("LeapMotionQtClass", "Start Recording", 0));
         pushButton->setText(QApplication::translate("LeapMotionQtClass", "<", 0));
         pushButton_2->setText(QApplication::translate("LeapMotionQtClass", ">", 0));
-        label->setText(QApplication::translate("LeapMotionQtClass", "No Camera Signal", 0));
         menuFile->setTitle(QApplication::translate("LeapMotionQtClass", "File", 0));
     } // retranslateUi
 

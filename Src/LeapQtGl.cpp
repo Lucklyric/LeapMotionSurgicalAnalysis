@@ -1,14 +1,19 @@
 
 #include "..\Include\LeapQtGl.h"
-#include <stdio.h>
 #include <iostream>
 #include <QtWidgets\QFileDialog>
 #include "leapmotionqt.h"
+
 #define __BONES__
 using namespace Leap;
 
-LeapQtGl::LeapQtGl(QWidget *parent) : QGLWidget(parent){
-	mParent = parent;
+LeapQtGl::LeapQtGl(QWidget *parent) : QGLWidget(parent),fRotationX(0.0f),
+fRotationY(0.0f),
+fRotationZ(0.0f),
+fMoveUpDown(0.0f),
+fMoveLeftRight(0.0f),
+fMoveInOut(-15.0f){
+	
 }
 
 
@@ -38,12 +43,12 @@ void LeapQtGl::initializeGL(){
 	mLeap = LeapMotion::Device::create();
 	mLeap->connectEventHandler(&LeapQtGl::onFrame, this);
 	connect(&myTimer, SIGNAL(timeout()), this, SLOT(updateGL()));
-	myTimer.start(10);
+	myTimer.start((1/120)*1000);
 }
 
 void LeapQtGl::updateGL(){
-	
 	QGLWidget::updateGL();
+	emit callCameraUpdate();
 	updateGenearlInfo();
 	if (isReplaying){
 		mFrame = deserializedFrames[mRecordingFrameIndex];
@@ -61,11 +66,6 @@ void LeapQtGl::paintGL(){
 	
 	gl::pushMatrices();
 
-	glTranslatef(fMoveLeftRight, fMoveUpDown, fMoveInOut);
-
-	glRotatef(fRotationX, 1.0f, 0.0f, 0.0f);
-	glRotatef(fRotationY, 0.0f, 1.0f, 0.0f);
-	glRotatef(fRotationZ, 0.0f, 0.0f, 1.0f);
 
 
 	glPushAttrib(GL_ALL_ATTRIB_BITS);
@@ -81,8 +81,12 @@ void LeapQtGl::drawHands(){
 	
 	
 	gl::setMatrices(mCamera);
-	gl::translate(mTranslate);
-	gl::rotate(mObjOrientation);
+	//gl::translate(mTranslate);
+	//gl::rotate(mObjOrientation);
+	glTranslatef(fMoveLeftRight, fMoveUpDown, fMoveInOut);
+	glRotatef(fRotationX/5000.0f, 1.0f, 0.0f, 0.0f);
+	glRotatef(fRotationY/5000.0f, 0.0f, 1.0f, 0.0f);
+	glRotatef(fRotationZ/5000.0f, 0.0f, 0.0f, 1.0f);
 
 	float headLength = 6.0f;
 	float headRadius = 3.0f;
@@ -263,7 +267,7 @@ void LeapQtGl::drawHand(Leap::Hand &hand, Vec3f position){
 }
 
 void LeapQtGl::startRecording(){
-	QPushButton* pushButton = dynamic_cast<QPushButton*>(sender());
+	/*QPushButton* pushButton = dynamic_cast<QPushButton*>(sender());
 	if (isRecording){
 		pushButton->setText("StartRecording");
 		isRecording = false;
@@ -274,7 +278,7 @@ void LeapQtGl::startRecording(){
 		isRecording = true;
 		cout << "StartRecoridng" << endl;
 		mLeap->startRecording();
-	}
+	}*/
 }
 
 void LeapQtGl::importFile(){
@@ -366,7 +370,6 @@ void LeapQtGl::mouseMoveEvent(QMouseEvent *pEvent)
 	{
 	} // do nothing //
 
-	update();
 	lastPos = pEvent->pos();
 }
 
@@ -386,7 +389,7 @@ void LeapQtGl::setRotation(GLfloat _x, GLfloat _y, GLfloat _z)
 void LeapQtGl::wheelEvent(QWheelEvent * pEvent)
 {
 	fMoveInOut -= (GLfloat)pEvent->delta() / 80.0;
-	update();
+	
 }
 
 
@@ -430,7 +433,8 @@ void LeapQtGl::keyPressEvent(QKeyEvent *pEvent)
 		break;
 
 	default:
-		LeapQtGl::keyPressEvent(pEvent);
+		break;
+		//LeapQtGl::keyPressEvent(pEvent);
 	}
-	update();
+	
 }
