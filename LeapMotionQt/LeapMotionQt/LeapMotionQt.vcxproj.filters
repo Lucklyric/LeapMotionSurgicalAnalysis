@@ -101,6 +101,15 @@
     <ClCompile Include="..\..\QtImageDecoder\QVideoEncoder.cpp">
       <Filter>QImageEncoder</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Src\SynchronizeRecorder.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_SynchronizeRecorder.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_SynchronizeRecorder.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="leapmotionqt.h">
@@ -119,6 +128,9 @@
       <Filter>Header Files</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\Include\CameraWorker.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\Include\SynchronizeRecorder.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
   </ItemGroup>

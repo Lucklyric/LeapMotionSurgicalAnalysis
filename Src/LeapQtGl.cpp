@@ -12,8 +12,7 @@ fRotationY(0.0f),
 fRotationZ(0.0f),
 fMoveUpDown(0.0f),
 fMoveLeftRight(0.0f),
-fMoveInOut(-15.0f){
-	
+fMoveInOut(-15.0f){	
 }
 
 
@@ -48,11 +47,15 @@ void LeapQtGl::initializeGL(){
 
 void LeapQtGl::updateGL(){
 	QGLWidget::updateGL();
-	emit callCameraUpdate();
-	updateGenearlInfo();
+	
 	if (isReplaying){
+		
 		mFrame = deserializedFrames[mRecordingFrameIndex];
+		//std::cout << "current frame id:" << mFrame.id() << std::endl;
 	}else{
+		emit callCameraUpdate();
+		emit sendOneMotionFrame(mFrame);
+		updateGenearlInfo();
 		mLeap->update();
 	}
 }
@@ -267,23 +270,22 @@ void LeapQtGl::drawHand(Leap::Hand &hand, Vec3f position){
 }
 
 void LeapQtGl::startRecording(){
-	/*QPushButton* pushButton = dynamic_cast<QPushButton*>(sender());
+	QPushButton* pushButton = dynamic_cast<QPushButton*>(sender());
 	if (isRecording){
 		pushButton->setText("StartRecording");
 		isRecording = false;
 		cout << "OutputFile" <<endl;
-		mLeap->outPutRecordingFile();
+		//mLeap->outPutRecordingFile();
 	}else{
 		pushButton->setText("StopRecording");
 		isRecording = true;
 		cout << "StartRecoridng" << endl;
-		mLeap->startRecording();
-	}*/
+		//mLeap->startRecording();
+	}
 }
 
 void LeapQtGl::importFile(){
 	deserializedFrames.clear();
-
 	QString qName = QFileDialog::getOpenFileName();
 	std::string fileName = qName.toUtf8().constData();
 	cout << fileName<< endl;
@@ -296,7 +298,6 @@ void LeapQtGl::importFile(){
 		long nextBlockSize = 0;
 		in >> nextBlockSize;
 		std::cout << "Start Load File.." << std::endl;
-
 		while (!in.eof())
 		{
 			contents.resize(nextBlockSize);
@@ -399,9 +400,9 @@ void LeapQtGl::keyPressEvent(QKeyEvent *pEvent)
 {
 	switch (pEvent->key())
 	{
-	case Qt::Key_Escape:
+	/*case Qt::Key_Escape:
 		exit(0);
-		break;
+		break;*/
 
 	case Qt::Key_R:
 		fRotationX = 0.0f;

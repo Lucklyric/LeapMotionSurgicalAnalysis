@@ -63,6 +63,7 @@ public:
 	void nextFrame();
 signals:
 	void callCameraUpdate();
+	void sendOneMotionFrame(Leap::Frame mFrame);
 private:
 	QTimer myTimer;
 	GLfloat fRotationX;

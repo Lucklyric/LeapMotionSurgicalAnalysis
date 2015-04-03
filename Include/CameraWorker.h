@@ -27,11 +27,12 @@ public:
 public:
 	QTimer myTimer;
 	QMutex myLock;
-	public slots :
+public slots :
 	void startWorking();
 	void updateImage();
 	void killTheTimer();
 signals:
 	//void cameraStarted();
+	void killedTheTimer();
 };
 

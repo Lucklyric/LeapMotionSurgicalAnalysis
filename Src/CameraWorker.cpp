@@ -9,15 +9,17 @@ CameraWorker::CameraWorker()
 	CameraBrowser::instance()->connectEnumeratedHandler(&CameraWorker::browserDidEnumerateCameras, this);
 	CameraBrowser::instance()->start();
 
-	std::cout << "init" << this->thread() << std::endl;
+	std::cout <<this->thread()<< "init" << QThread::currentThread() << std::endl;
 }
 
 CameraWorker::~CameraWorker(){
+	//myTimer.moveToThread(QThread::currentThread());
+	//myTimer.stop();
 	std::cout <<"worker delete" << std::endl;
 }
 
 void CameraWorker::updateImage(){
-	//std::cout << "AcurThread" << this->thread() << std::endl;
+	//std::cout <<this->thread() << "AcurThread" <<QThread::currentThread() << std::endl;
 
 	QImage img;
 	if (mCamera != NULL && mCamera->hasOpenSession() && mCamera->isLiveViewing()) {
@@ -32,7 +34,12 @@ QImage CameraWorker::lastFrameImage(){
 }
 
 void CameraWorker::killTheTimer(){
+	std::cout <<myTimer.thread()<< "try kill the timer" << QThread::currentThread() <<std::endl;
 	myTimer.stop();
+	std::cout << " kill the timer" << std::endl;
+	//this->thread()->quit();
+	emit killedTheTimer();
+	std::cout << " after emit killed" << std::endl;
 }
 
 
@@ -42,6 +49,7 @@ void CameraWorker::startWorking(){
 		mCamera->toggleLiveView();
 		connect(&myTimer, SIGNAL(timeout()), this, SLOT(updateImage()));
 		myTimer.start(8);
+		//updateImage();
 	}
 	//emit cameraStarted();
 }

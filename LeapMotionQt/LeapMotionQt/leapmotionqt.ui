@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1202</width>
-    <height>655</height>
+    <height>625</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -126,6 +126,19 @@
      <string notr="true">background-color: rgb(143, 250, 255)</string>
     </property>
    </widget>
+   <widget class="QPushButton" name="stopCamera">
+    <property name="geometry">
+     <rect>
+      <x>1120</x>
+      <y>380</y>
+      <width>81</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>StopCamera</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
@@ -152,7 +165,6 @@
     <bool>false</bool>
    </attribute>
   </widget>
-  <widget class="QStatusBar" name="statusBar"/>
   <action name="actionImport">
    <property name="text">
     <string>Import</string>
@@ -181,6 +193,7 @@
    <slots>
     <signal>cameraConnected()</signal>
     <slot>toggleRecording()</slot>
+    <slot>killWokerTimer()</slot>
    </slots>
   </customwidget>
  </customwidgets>
@@ -265,6 +278,22 @@
     <hint type="destinationlabel">
      <x>862</x>
      <y>329</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>stopCamera</sender>
+   <signal>clicked()</signal>
+   <receiver>mCamera</receiver>
+   <slot>killWokerTimer()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1160</x>
+     <y>424</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>980</x>
+     <y>223</y>
     </hint>
    </hints>
   </connection>

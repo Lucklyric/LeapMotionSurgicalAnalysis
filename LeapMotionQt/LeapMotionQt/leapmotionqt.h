@@ -2,6 +2,7 @@
 #define LEAPMOTIONQT_H
 
 #include <QtWidgets/QMainWindow>
+#include "SynchronizeRecorder.h"
 #include "ui_leapmotionqt.h"
 #include <QCamera>
 #include <QCameraImageCapture>
@@ -11,6 +12,7 @@
 #include <QCameraInfo>
 #include <QDateTime>
 #include <Qdir>
+#include <QThread>
 
 class LeapMotionQt : public QMainWindow
 {
@@ -22,8 +24,8 @@ public:
 
 public:
 	Ui::LeapMotionQtClass ui;
-	
-
+	SynchronizeRecorder* mySynchronizeRecorder;
+	QThread* myRecorderThread;
 };
 
 #endif // LEAPMOTIONQT_H

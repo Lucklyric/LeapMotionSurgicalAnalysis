@@ -21,7 +21,6 @@
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPushButton>
-#include <QtWidgets/QStatusBar>
 #include <QtWidgets/QToolBar>
 #include <QtWidgets/QWidget>
 #include "CanonQtCamera.h"
@@ -43,16 +42,16 @@ public:
     QPushButton *pushButton;
     QPushButton *pushButton_2;
     CanonQtCamera *mCamera;
+    QPushButton *stopCamera;
     QMenuBar *menuBar;
     QMenu *menuFile;
     QToolBar *mainToolBar;
-    QStatusBar *statusBar;
 
     void setupUi(QMainWindow *LeapMotionQtClass)
     {
         if (LeapMotionQtClass->objectName().isEmpty())
             LeapMotionQtClass->setObjectName(QStringLiteral("LeapMotionQtClass"));
-        LeapMotionQtClass->resize(1202, 655);
+        LeapMotionQtClass->resize(1202, 625);
         LeapMotionQtClass->setStyleSheet(QStringLiteral(""));
         actionImport = new QAction(LeapMotionQtClass);
         actionImport->setObjectName(QStringLiteral("actionImport"));
@@ -100,6 +99,9 @@ public:
         mCamera->setGeometry(QRect(760, 0, 441, 381));
         mCamera->setAutoFillBackground(false);
         mCamera->setStyleSheet(QStringLiteral("background-color: rgb(143, 250, 255)"));
+        stopCamera = new QPushButton(centralWidget);
+        stopCamera->setObjectName(QStringLiteral("stopCamera"));
+        stopCamera->setGeometry(QRect(1120, 380, 81, 23));
         LeapMotionQtClass->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(LeapMotionQtClass);
         menuBar->setObjectName(QStringLiteral("menuBar"));
@@ -110,9 +112,6 @@ public:
         mainToolBar = new QToolBar(LeapMotionQtClass);
         mainToolBar->setObjectName(QStringLiteral("mainToolBar"));
         LeapMotionQtClass->addToolBar(Qt::TopToolBarArea, mainToolBar);
-        statusBar = new QStatusBar(LeapMotionQtClass);
-        statusBar->setObjectName(QStringLiteral("statusBar"));
-        LeapMotionQtClass->setStatusBar(statusBar);
 
         menuBar->addAction(menuFile->menuAction());
         menuFile->addAction(actionImport);
@@ -123,6 +122,7 @@ public:
         QObject::connect(pushButton, SIGNAL(clicked()), mLeapWidget, SLOT(lastFrame()));
         QObject::connect(pushButton_2, SIGNAL(clicked()), mLeapWidget, SLOT(nextFrame()));
         QObject::connect(recordingButton, SIGNAL(clicked()), mCamera, SLOT(toggleRecording()));
+        QObject::connect(stopCamera, SIGNAL(clicked()), mCamera, SLOT(killWokerTimer()));
 
         QMetaObject::connectSlotsByName(LeapMotionQtClass);
     } // setupUi
@@ -137,6 +137,7 @@ public:
         recordingButton->setText(QApplication::translate("LeapMotionQtClass", "Start Recording", 0));
         pushButton->setText(QApplication::translate("LeapMotionQtClass", "<", 0));
         pushButton_2->setText(QApplication::translate("LeapMotionQtClass", ">", 0));
+        stopCamera->setText(QApplication::translate("LeapMotionQtClass", "StopCamera", 0));
         menuFile->setTitle(QApplication::translate("LeapMotionQtClass", "File", 0));
     } // retranslateUi
 

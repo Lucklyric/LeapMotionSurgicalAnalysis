@@ -94,6 +94,31 @@ void DataRecorder::ParseCurrentFrametoFile(Leap::Frame currentFrame){
         std::cout << "Couldn't open " << currentFileName << " for writing." << std::endl;
     }
     const Leap::HandList& hands = currentFrame.hands();
+	/*
+	*Check if has some hand lost 
+	*/
+	bool hasLeft = false;
+	bool hasRight = false;
+	for (Leap::HandList::const_iterator handIter = hands.begin(); handIter != hands.end(); ++handIter) {
+		Leap::Hand hand = *handIter;
+		if (hand.isLeft())
+		{
+			hasLeft = true;
+		}
+		else
+		{
+			hasRight = true;
+		}
+	}
+	if (!hasLeft)
+	{
+		this->leftHandId = 0;
+	}
+	
+	if (!hasRight)
+	{
+		this->rightHandId = 0;
+	}
     for ( Leap::HandList::const_iterator handIter = hands.begin(); handIter != hands.end(); ++handIter ) {
         Leap::Hand hand = *handIter;
         if (hand.isLeft()){

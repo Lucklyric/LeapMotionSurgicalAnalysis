@@ -22,7 +22,7 @@ public:
 	public slots:
 	void updateCamera();
 	void toggleRecording();
-
+	void closeEvent();
 private:
 	bool isRecording;
 	//QTimer myTimer;
@@ -30,8 +30,15 @@ private:
 	CameraWorker* myWorker;
 	//QVideoEncoder* myQVideoEncoder;
 	QImage mImage;
+
+	public slots:
+	void killWokerTimer();
+
 signals:
 	void startWorker();
 	void killWorkerTimer();
+	void callSynVideoStart(QImage mImage);
+	void sendOneVideoFrame(QImage mImage);
+	void callSynVideoStop();
 };
 
