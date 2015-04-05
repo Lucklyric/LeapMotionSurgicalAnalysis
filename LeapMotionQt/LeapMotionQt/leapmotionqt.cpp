@@ -3,6 +3,7 @@
 #include <boost\filesystem.hpp>
 #include "Leap.h"
 #include <QProgressDialog>
+#include <QDate>
 Q_DECLARE_METATYPE(QCameraInfo)
 Q_DECLARE_METATYPE(Leap::Frame)
 LeapMotionQt::LeapMotionQt(QWidget *parent)
@@ -36,13 +37,13 @@ LeapMotionQt::~LeapMotionQt()
 
 
 void LeapMotionQt::exportingTheVideoSequence(QVector<QImage>* imageSequence){
-	if (!QDir("Folder").exists()) QDir().mkdir("Images");
+	if (!QDir("VideoStreams").exists()) QDir().mkdir("VideoStreams/");
 	QProgressDialog progress("Exporting Video Sequences", "Abort Export", 0, imageSequence->size());
 	progress.setWindowModality(Qt::WindowModal);
 
 	for (int i = 0; i < imageSequence->size(); i++) {
 		progress.setValue(i);
-		QString filename = "Images/" + QString::number(i) + ".jpeg";
+		QString filename = "VideoStreams/" + QString::number(i) + ".jpeg";
 		imageSequence->at(i).save(filename,"jpeg");
 		if (progress.wasCanceled())
 			break;

@@ -63,7 +63,7 @@ public:
 	void nextFrame();
 	public slots:
 	void changeToFrame(int index);
-
+	void reOutPutDataFile();
 signals:
 	void callCameraUpdate();
 	void sendOneMotionFrame(Leap::Frame mFrame);

@@ -40,6 +40,7 @@ private:
 	void importVideo();
 	void changeReaplyingIndex(int index);
 
+
 signals:
 	void startWorker();
 	void killWorkerTimer();

@@ -208,7 +208,14 @@
     <addaction name="actionImport"/>
     <addaction name="actionImport_Video"/>
    </widget>
+   <widget class="QMenu" name="menuEtra">
+    <property name="title">
+     <string>Etra</string>
+    </property>
+    <addaction name="actionOutputDataFile"/>
+   </widget>
    <addaction name="menuFile"/>
+   <addaction name="menuEtra"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">
@@ -228,6 +235,11 @@
     <string>Import Video</string>
    </property>
   </action>
+  <action name="actionOutputDataFile">
+   <property name="text">
+    <string>OutputDataFile</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
@@ -245,6 +257,7 @@
     <slot>lastFrame()</slot>
     <slot>nextFrame()</slot>
     <slot>changeToFrame(int)</slot>
+    <slot>reOutPutDataFile()</slot>
    </slots>
   </customwidget>
   <customwidget>
@@ -488,6 +501,22 @@
     <hint type="destinationlabel">
      <x>780</x>
      <y>525</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionOutputDataFile</sender>
+   <signal>triggered()</signal>
+   <receiver>mLeapWidget</receiver>
+   <slot>reOutPutDataFile()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>380</x>
+     <y>327</y>
     </hint>
    </hints>
   </connection>

@@ -22,21 +22,21 @@ SynchronizeRecorder::~SynchronizeRecorder()
 
 void SynchronizeRecorder::parseOneMotionFrame(Leap::Frame mFrame){
 	if (!isRecording) return;
-	std::cout << "parse one motion" <<std::endl;
+	//std::cout << "parse one motion" <<std::endl;
 	mMotiontFileRecorder->ParseCurrentFrametoFile(mFrame);
 }
 
 
 void SynchronizeRecorder::parseOneVideoFrame(QImage mImage){
 	if (!isRecording) return;
-	cout << "parse one video" <<endl;
+	//cout << "parse one video" <<endl;
 	imageSequence->push_back(mImage);
 	
 }
 
 void SynchronizeRecorder::stopRecording(){
 	mMotiontFileRecorder->EndReocrding();
-	std::cout << "emit call Synvideostop" << std::endl;
+	//std::cout << "emit call Synvideostop" << std::endl;
 	//myEncoder->close();
 	isRecording = false;
 	recordingIndex = 0;

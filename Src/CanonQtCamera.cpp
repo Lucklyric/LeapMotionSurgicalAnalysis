@@ -50,6 +50,7 @@ void CanonQtCamera::updateCamera(){
 		QString labelTex = "MotionFrame:" + QString::number(replayingindex + 1) + "/" + QString::number(currentImagesCount);
 		emit setFrameLabelTex(labelTex);
 		mImage = QImage(replayImagesFolder+"/"+QString::number(replayingindex)+".jpeg");
+		
 	}
 	else
 	{
@@ -104,6 +105,7 @@ void CanonQtCamera::importVideo(){
 	//std::string fileName = qName.toUtf8().constData();
 	//std::cout << countFiled.count()  << std::endl;
 	currentImagesCount = countFiled.count();
+	emit loadedFrame(0, currentImagesCount-1);
 }
 
 void CanonQtCamera::changeReaplyingIndex(int index){

@@ -9,7 +9,7 @@ using namespace Leap;
 
 LeapQtGl::LeapQtGl(QWidget *parent) : QGLWidget(parent),fRotationX(0.0f),
 fRotationY(0.0f),
-fRotationZ(0.0f),
+fRotationZ(180.0f),
 fMoveUpDown(0.0f),
 fMoveLeftRight(0.0f),
 fMoveInOut(-15.0f){	
@@ -49,8 +49,9 @@ void LeapQtGl::updateGL(){
 	QGLWidget::updateGL();
 	if (isReplaying){
 		mFrame = deserializedFrames[mRecordingFrameIndex];
-		QString labelTex = "MotionFrame:" + QString::number(mRecordingFrameIndex + 1) + "/" + QString::number(deserializedFrames.size());
+		QString labelTex = "MotionFrame:" + QString::number(mRecordingFrameIndex + 1) + "/" + QString::number(deserializedFrames.size())+"  FrameID:"+QString::number(mFrame.id());
 		emit setFrameLabelTex(labelTex);
+		emit callCameraUpdate();
 		//std::cout << "current frame id:" << mFrame.id() << std::endl;
 	}else{
 		emit callCameraUpdate();
@@ -321,6 +322,19 @@ void LeapQtGl::importFile(){
 	emit loadedFrame(0,deserializedFrames.size()-1);
 	//emit setFrameLabelTex("aaaaaa");
 }
+
+void LeapQtGl::reOutPutDataFile(){
+	if (isReplaying){
+		DataRecorder* tmpRecorder = new DataRecorder();
+		for (size_t i = 0; i < deserializedFrames.size(); i++)
+		{
+			tmpRecorder->ParseCurrentFrametoFile(deserializedFrames[i],2);
+		}
+		tmpRecorder->EndReocrding();
+		delete tmpRecorder;
+	}
+}
+
 
 void LeapQtGl::lastFrame(){
 	if (mRecordingFrameIndex >= 0){

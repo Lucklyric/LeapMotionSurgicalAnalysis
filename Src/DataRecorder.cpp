@@ -58,8 +58,11 @@ void DataRecorder::ParseCurrentFrametoFile(Leap::Frame currentFrame,int flag){
 		if (flag == 0)
 		{
 			boost::filesystem::create_directory(boost::filesystem::current_path() / "FixedOutput");
-		}else{
+		}else if(flag == 1){
 			boost::filesystem::create_directory(boost::filesystem::current_path() / "Output");
+		}
+		else if (flag == 2){
+			boost::filesystem::create_directory(boost::filesystem::current_path() / "ReOutput");
 		}
         time_t t = time(0);   // get time now
 		struct tm now;
@@ -77,11 +80,17 @@ void DataRecorder::ParseCurrentFrametoFile(Leap::Frame currentFrame,int flag){
 			ssLeapData << path << "/FixedOutput/" << ss.str() << ".data";
 			ssLeftHandData << path << "/FixedOutput/" << "LeftHand-" << ss.str() << ".txt";
 			ssRightHandData << path << "/FixedOutput/" << "RgithHand-" << ss.str() << ".txt";
-		}else{
+		}else if(flag == 1){
 			ssLeapData << path << "/Output/" << ss.str() << ".data";
 			ssLeftHandData << path << "/Output/" << "LeftHand-" << ss.str() << ".txt";
 			ssRightHandData << path << "/Output/" << "RgithHand-" << ss.str() << ".txt";
 			cout << "out put else"<< endl;
+		}
+		else if (flag == 2){
+			ssLeapData << path << "/ReOutput/" << ss.str() << ".data";
+			ssLeftHandData << path << "/ReOutput/" << "LeftHand-" << ss.str() << ".txt";
+			ssRightHandData << path << "/ReOutput/" << "RgithHand-" << ss.str() << ".txt";
+			cout << "Re out put motion data" << endl;
 		}
         currentFileName = ssLeapData.str();
         currentLeftHandFileName = ssLeftHandData.str();
@@ -132,6 +141,9 @@ void DataRecorder::ParseCurrentFrametoFile(Leap::Frame currentFrame,int flag){
 	{
 		this->rightHandId = 0;
 	}
+	
+
+
     for ( Leap::HandList::const_iterator handIter = hands.begin(); handIter != hands.end(); ++handIter ) {
         Leap::Hand hand = *handIter;
         if (hand.isLeft()){
@@ -169,11 +181,18 @@ string DataRecorder::ParseOneRowHandInformation(Leap::Hand hand){
     cinder::Vec3f palmNorm		= LeapMotion::toVec3f( hand.palmNormal() );
     cinder::Vec3f palmPos		= LeapMotion::toVec3f( hand.palmPosition() );
     cinder::Vec3f palmVel		= LeapMotion::toVec3f( hand.palmVelocity() );
+	cinder::Vec3f sphereCenter  = LeapMotion::toVec3f( hand.sphereCenter() );
+	float sphereRadius = hand.sphereRadius();
+
 
 
 
     std::stringstream oneRowString;
-    oneRowString << handDir.x << " " << handDir.y << " " << handDir.z << " " << palmNorm.x << " " << palmNorm.y << " " << palmNorm.z << " " << palmPos.x << " " << palmPos.y << " " << palmPos.z <<" " << palmVel.x << " " << palmVel.y << " " << palmVel.z << " " << hand.confidence();
+    oneRowString << handDir.x << " " << handDir.y << " " << handDir.z 
+		<< " " << palmNorm.x << " " << palmNorm.y << " " << palmNorm.z 
+		<< " " << palmPos.x << " " << palmPos.y << " " << palmPos.z 
+		<< " " << palmVel.x << " " << palmVel.y << " " << palmVel.z 
+		<< " " << sphereRadius << " " << hand.confidence();
     
 
     return oneRowString.str();
@@ -188,7 +207,8 @@ void DataRecorder::WriteToLeftHandFile(Leap::Hand leftHand){
     fstream out(currentLeftHandFileName, std::ios_base::app | std::ios_base::out);
     if(out)
     {
-        out << time <<"  " <<leftHand.frame().timestamp() <<"  "<< leftHand.frame().id() << "  "<< ParseOneRowHandInformation(leftHand) << std::endl;
+        out << time <<"  " <<leftHand.frame().timestamp() <<"  "<< leftHand.frame().id() 
+			<< "  "<< ParseOneRowHandInformation(leftHand) << std::endl;
         out.flush();
         out.close();
     }
@@ -207,7 +227,8 @@ void DataRecorder::WriteToRightHandFile(Leap::Hand rightHand){
     fstream out(currentRighthandFileName, std::ios_base::app | std::ios_base::out);
     if(out)
     {
-		out << time << " " << rightHand.frame().timestamp() << "  " << rightHand.frame().id() << "  " << ParseOneRowHandInformation(rightHand) << std::endl;
+		out << time << " " << rightHand.frame().timestamp() << "  " << rightHand.frame().id() 
+			<< "  " << ParseOneRowHandInformation(rightHand) << std::endl;
         out.flush();
         out.close();
     }
@@ -221,7 +242,11 @@ void DataRecorder::InitHandMotionTxtFile(string filename){
     fstream out(filename, std::ios_base::app | std::ios_base::out);
     if(out)
     {
-        out << "SoftwareTimeStamp" << " "<<"LeapTimeStamp" <<"  "<< "FrameID" << "  "<< "HandDirection:X" << " " << "HandDirection:Y" << " "<<"HandDirection:Z" << "  "<< "PalmNorm:X" << " " << "PalmNorm:Y" << " "<<"PalmNorm:Z"<< "  "<< "PalmPos:X" << " " << "PalmPos:Y" << " "<<"PalmPos:Z"<<  "  "<< "PalmVel:X" << " " << "PalmVel:Y" << " "<<"PalmVel:Z" << " " << "Confidence" << std::endl;
+        out << "SoftwareTimeStamp" << " "<<"LeapTimeStamp" <<"  "<< "FrameID" 
+			<< "  "<< "HandDirection:X" << " " << "HandDirection:Y" << " "<<"HandDirection:Z" 
+			<< "  "<< "PalmNorm:X" << " " << "PalmNorm:Y" << " "<<"PalmNorm:Z"<< "  "<< "PalmPos:X" 
+			<< " " << "PalmPos:Y" << " "<<"PalmPos:Z"<<  "  "<< "PalmVel:X" << " " << "PalmVel:Y" 
+			<< " "<<"PalmVel:Z" << " " <<"SphereRadius"<< " "<< "Confidence" << std::endl;
         out.flush();
         out.close();
     }

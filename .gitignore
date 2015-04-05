@@ -1,3 +1,7 @@
 *.opensdf
 *.tlog
 *.sdf
+*.data
+*.jpeg
+*.txt
+LeapMotionQt/LeapMotionQt/test.mp4

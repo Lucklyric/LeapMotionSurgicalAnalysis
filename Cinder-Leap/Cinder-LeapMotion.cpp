@@ -219,8 +219,10 @@ namespace LeapMotion {
         mListener.mMutex	= &mMutex;
         mController			= new Leap::Controller( mListener );
 
-        mController->setPolicy(Leap::Controller::POLICY_IMAGES);
-        mController->setPolicy(Leap::Controller::PolicyFlag::POLICY_OPTIMIZE_HMD);
+		mController->setPolicyFlags(static_cast<Leap::Controller::PolicyFlag>(Leap::Controller::PolicyFlag::POLICY_IMAGES | Leap::Controller::PolicyFlag::POLICY_OPTIMIZE_HMD));
+
+        //mController->setPolicy(Leap::Controller::POLICY_IMAGES);
+        //mController->setPolicy(Leap::Controller::PolicyFlag::POLICY_OPTIMIZE_HMD);
      
     }
     void Device::bind(){
