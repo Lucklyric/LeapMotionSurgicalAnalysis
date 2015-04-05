@@ -2,6 +2,7 @@
 #include <QMainWindow>
 #include <boost\filesystem.hpp>
 #include "Leap.h"
+#include <QProgressDialog>
 Q_DECLARE_METATYPE(QCameraInfo)
 Q_DECLARE_METATYPE(Leap::Frame)
 LeapMotionQt::LeapMotionQt(QWidget *parent)
@@ -19,6 +20,7 @@ LeapMotionQt::LeapMotionQt(QWidget *parent)
 	connect(ui.mCamera, SIGNAL(callSynVideoStop()), mySynchronizeRecorder, SLOT(stopRecording()), Qt::QueuedConnection);
 	connect(ui.mLeapWidget, SIGNAL(sendOneMotionFrame(Leap::Frame)), mySynchronizeRecorder, SLOT(parseOneMotionFrame(Leap::Frame)), Qt::QueuedConnection);
 	//connect(ui.mLeapWidget, SIGNAL(callSynVideoStop()), mySynchronizeRecorder, SLOT(stopRecording()), Qt::QueuedConnection);
+	connect(mySynchronizeRecorder, SIGNAL(startExportingVideoSequence(QVector<QImage>*)), this, SLOT(exportingTheVideoSequence(QVector<QImage>*)), Qt::QueuedConnection);
 
 	connect(myRecorderThread, &QThread::finished, mySynchronizeRecorder, &QObject::deleteLater,Qt::QueuedConnection);
 	myRecorderThread->start();
@@ -32,3 +34,20 @@ LeapMotionQt::~LeapMotionQt()
 	myRecorderThread->wait();
 }
 
+
+void LeapMotionQt::exportingTheVideoSequence(QVector<QImage>* imageSequence){
+	if (!QDir("Folder").exists()) QDir().mkdir("Images");
+	QProgressDialog progress("Exporting Video Sequences", "Abort Export", 0, imageSequence->size());
+	progress.setWindowModality(Qt::WindowModal);
+
+	for (int i = 0; i < imageSequence->size(); i++) {
+		progress.setValue(i);
+		QString filename = "Images/" + QString::number(i) + ".jpeg";
+		imageSequence->at(i).save(filename,"jpeg");
+		if (progress.wasCanceled())
+			break;
+		//... copy one file
+	}
+	progress.setValue(imageSequence->size());
+	imageSequence->clear();
+}

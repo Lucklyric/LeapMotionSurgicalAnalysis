@@ -3,9 +3,8 @@
 #include <iostream>
 #include <boost\filesystem.hpp>
 #include <QPainter>
-#include "QVideoEncoder.h"
+#include <QFileDialog>
 
-QVideoEncoder encode;
 CanonQtCamera::CanonQtCamera(QWidget *parent) : QLabel(parent){
 	
 	std::cout << "initialized camera widget" << std::endl;
@@ -22,9 +21,12 @@ CanonQtCamera::CanonQtCamera(QWidget *parent) : QLabel(parent){
 	workerThread.start();
 	std::cout << "BeforeStart" << QThread::currentThread() << std::endl;
 	isRecording = false;
+	isReplaying = false;
 	emit startWorker();
 	//emit killWorkerTimer();
 	recordingindex = 0;
+	replayingindex = 0;
+	currentImagesCount = 0;
 	this->setScaledContents(true);
 }
 
@@ -42,7 +44,18 @@ void CanonQtCamera::killWokerTimer(){
 }
 
 void CanonQtCamera::updateCamera(){
-	mImage= myWorker->lastFrameImage();
+
+	if (isReplaying)
+	{
+		QString labelTex = "MotionFrame:" + QString::number(replayingindex + 1) + "/" + QString::number(currentImagesCount);
+		emit setFrameLabelTex(labelTex);
+		mImage = QImage(replayImagesFolder+"/"+QString::number(replayingindex)+".jpeg");
+	}
+	else
+	{
+		mImage = myWorker->lastFrameImage();
+	}
+	
 	
 	if (isRecording)
 	{
@@ -55,6 +68,8 @@ void CanonQtCamera::updateCamera(){
 		recordingindex++;
 	}
 
+	
+
 	this->setPixmap(QPixmap::fromImage(mImage));
 }
 
@@ -63,6 +78,7 @@ void CanonQtCamera::toggleRecording(){
 	if (isRecording){
 		isRecording = false;
 		//encode.close();
+		
 		emit callSynVideoStop();
 	}else{
 		/*std::cout << "Start Recording" <<std::endl;
@@ -72,6 +88,26 @@ void CanonQtCamera::toggleRecording(){
 		isRecording = true;
 		emit callSynVideoStart(mImage);
 	}
+}
+
+void CanonQtCamera::importVideo(){
+	QString qName = QFileDialog::getExistingDirectory(this, tr("Open Directory"),
+		"../",
+		QFileDialog::ShowDirsOnly
+		| QFileDialog::DontResolveSymlinks);
+	replayImagesFolder = QString::QString(qName);
+
+	isReplaying = true;
+	replayingindex = 0;
+	QDir countFiled;
+	countFiled.setPath(qName);
+	//std::string fileName = qName.toUtf8().constData();
+	//std::cout << countFiled.count()  << std::endl;
+	currentImagesCount = countFiled.count();
+}
+
+void CanonQtCamera::changeReaplyingIndex(int index){
+	replayingindex = index;
 }
 
 

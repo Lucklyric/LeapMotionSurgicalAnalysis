@@ -21,6 +21,7 @@
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPushButton>
+#include <QtWidgets/QSlider>
 #include <QtWidgets/QToolBar>
 #include <QtWidgets/QWidget>
 #include "CanonQtCamera.h"
@@ -32,6 +33,7 @@ class Ui_LeapMotionQtClass
 {
 public:
     QAction *actionImport;
+    QAction *actionImport_Video;
     QWidget *centralWidget;
     LeapQtGl *mLeapWidget;
     QGroupBox *mGeneralInfo;
@@ -43,6 +45,10 @@ public:
     QPushButton *pushButton_2;
     CanonQtCamera *mCamera;
     QPushButton *stopCamera;
+    QSlider *motionFrameBar;
+    QSlider *videoFrameBar;
+    QLabel *motionFrame;
+    QLabel *videoFrame;
     QMenuBar *menuBar;
     QMenu *menuFile;
     QToolBar *mainToolBar;
@@ -55,6 +61,8 @@ public:
         LeapMotionQtClass->setStyleSheet(QStringLiteral(""));
         actionImport = new QAction(LeapMotionQtClass);
         actionImport->setObjectName(QStringLiteral("actionImport"));
+        actionImport_Video = new QAction(LeapMotionQtClass);
+        actionImport_Video->setObjectName(QStringLiteral("actionImport_Video"));
         centralWidget = new QWidget(LeapMotionQtClass);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         mLeapWidget = new LeapQtGl(centralWidget);
@@ -102,6 +110,20 @@ public:
         stopCamera = new QPushButton(centralWidget);
         stopCamera->setObjectName(QStringLiteral("stopCamera"));
         stopCamera->setGeometry(QRect(1120, 380, 81, 23));
+        motionFrameBar = new QSlider(centralWidget);
+        motionFrameBar->setObjectName(QStringLiteral("motionFrameBar"));
+        motionFrameBar->setGeometry(QRect(800, 450, 351, 22));
+        motionFrameBar->setOrientation(Qt::Horizontal);
+        videoFrameBar = new QSlider(centralWidget);
+        videoFrameBar->setObjectName(QStringLiteral("videoFrameBar"));
+        videoFrameBar->setGeometry(QRect(800, 500, 351, 22));
+        videoFrameBar->setOrientation(Qt::Horizontal);
+        motionFrame = new QLabel(centralWidget);
+        motionFrame->setObjectName(QStringLiteral("motionFrame"));
+        motionFrame->setGeometry(QRect(770, 430, 211, 16));
+        videoFrame = new QLabel(centralWidget);
+        videoFrame->setObjectName(QStringLiteral("videoFrame"));
+        videoFrame->setGeometry(QRect(770, 480, 211, 16));
         LeapMotionQtClass->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(LeapMotionQtClass);
         menuBar->setObjectName(QStringLiteral("menuBar"));
@@ -115,6 +137,7 @@ public:
 
         menuBar->addAction(menuFile->menuAction());
         menuFile->addAction(actionImport);
+        menuFile->addAction(actionImport_Video);
 
         retranslateUi(LeapMotionQtClass);
         QObject::connect(recordingButton, SIGNAL(clicked()), mLeapWidget, SLOT(startRecording()));
@@ -123,6 +146,14 @@ public:
         QObject::connect(pushButton_2, SIGNAL(clicked()), mLeapWidget, SLOT(nextFrame()));
         QObject::connect(recordingButton, SIGNAL(clicked()), mCamera, SLOT(toggleRecording()));
         QObject::connect(stopCamera, SIGNAL(clicked()), mCamera, SLOT(killWokerTimer()));
+        QObject::connect(motionFrameBar, SIGNAL(sliderMoved(int)), mLeapWidget, SLOT(changeToFrame(int)));
+        QObject::connect(mLeapWidget, SIGNAL(loadedFrame(int,int)), motionFrameBar, SLOT(setRange(int,int)));
+        QObject::connect(mLeapWidget, SIGNAL(buttonChangedFrame(int)), motionFrameBar, SLOT(setValue(int)));
+        QObject::connect(mLeapWidget, SIGNAL(setFrameLabelTex(QString)), motionFrame, SLOT(setText(QString)));
+        QObject::connect(actionImport_Video, SIGNAL(triggered()), mCamera, SLOT(importVideo()));
+        QObject::connect(mCamera, SIGNAL(loadedFrame(int,int)), videoFrameBar, SLOT(setRange(int,int)));
+        QObject::connect(videoFrameBar, SIGNAL(sliderMoved(int)), mCamera, SLOT(changeReaplyingIndex(int)));
+        QObject::connect(mCamera, SIGNAL(setFrameLabelTex(QString)), videoFrame, SLOT(setText(QString)));
 
         QMetaObject::connectSlotsByName(LeapMotionQtClass);
     } // setupUi
@@ -130,7 +161,8 @@ public:
     void retranslateUi(QMainWindow *LeapMotionQtClass)
     {
         LeapMotionQtClass->setWindowTitle(QApplication::translate("LeapMotionQtClass", "LeapMotionQt", 0));
-        actionImport->setText(QApplication::translate("LeapMotionQtClass", "Import", 0));
+        actionImport->setText(QApplication::translate("LeapMotionQtClass", "Import Motion", 0));
+        actionImport_Video->setText(QApplication::translate("LeapMotionQtClass", "Import Video", 0));
         mGeneralInfo->setTitle(QString());
         ldFps->setText(QApplication::translate("LeapMotionQtClass", "<html><head/><body><p><span style=\" color:#ffffff;\">deviceFps:</span></p></body></html>", 0));
         dFps->setText(QApplication::translate("LeapMotionQtClass", "0", 0));
@@ -138,6 +170,8 @@ public:
         pushButton->setText(QApplication::translate("LeapMotionQtClass", "<", 0));
         pushButton_2->setText(QApplication::translate("LeapMotionQtClass", ">", 0));
         stopCamera->setText(QApplication::translate("LeapMotionQtClass", "StopCamera", 0));
+        motionFrame->setText(QApplication::translate("LeapMotionQtClass", "MtionFrame:", 0));
+        videoFrame->setText(QApplication::translate("LeapMotionQtClass", "MtionFrame:", 0));
         menuFile->setTitle(QApplication::translate("LeapMotionQtClass", "File", 0));
     } // retranslateUi
 

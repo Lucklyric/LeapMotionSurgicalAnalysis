@@ -61,9 +61,15 @@ public:
 	void importFile();
 	void lastFrame();
 	void nextFrame();
+	public slots:
+	void changeToFrame(int index);
+
 signals:
 	void callCameraUpdate();
 	void sendOneMotionFrame(Leap::Frame mFrame);
+	void loadedFrame(int start,int end);
+	void buttonChangedFrame(int index);
+	void setFrameLabelTex(QString mString);
 private:
 	QTimer myTimer;
 	GLfloat fRotationX;

@@ -51,11 +51,16 @@ DataRecorder::DataRecorder(){
 	this->rightHandId = 0;
 }
 
-void DataRecorder::ParseCurrentFrametoFile(Leap::Frame currentFrame){
+void DataRecorder::ParseCurrentFrametoFile(Leap::Frame currentFrame,int flag){
 	//lock_guard<mutex> lock(mMutex);
-	cout <<"recording id"<<std::this_thread::get_id() << endl;
+	//cout <<"recording id"<<std::this_thread::get_id() << endl;
 	if (!isWriting){
-		boost::filesystem::create_directory(boost::filesystem::current_path() / "Output");
+		if (flag == 0)
+		{
+			boost::filesystem::create_directory(boost::filesystem::current_path() / "FixedOutput");
+		}else{
+			boost::filesystem::create_directory(boost::filesystem::current_path() / "Output");
+		}
         time_t t = time(0);   // get time now
 		struct tm now;
 		localtime_s( &now,& t );
@@ -67,9 +72,17 @@ void DataRecorder::ParseCurrentFrametoFile(Leap::Frame currentFrame){
         << (now.tm_mon + 1) << '-'
         <<  now.tm_mday << '-' << now.tm_hour << '-' << now.tm_min << '-' << now.tm_sec;
 		string path = boost::filesystem::current_path().string();
-        ssLeapData <<path<<"/Output/"<<ss.str()<<".data";
-		ssLeftHandData <<path<< "/Output/" << "LeftHand-" << ss.str() << ".txt";
-		ssRightHandData <<path<< "/Output/" << "RgithHand-" << ss.str() << ".txt";
+		if (flag == 0)
+		{
+			ssLeapData << path << "/FixedOutput/" << ss.str() << ".data";
+			ssLeftHandData << path << "/FixedOutput/" << "LeftHand-" << ss.str() << ".txt";
+			ssRightHandData << path << "/FixedOutput/" << "RgithHand-" << ss.str() << ".txt";
+		}else{
+			ssLeapData << path << "/Output/" << ss.str() << ".data";
+			ssLeftHandData << path << "/Output/" << "LeftHand-" << ss.str() << ".txt";
+			ssRightHandData << path << "/Output/" << "RgithHand-" << ss.str() << ".txt";
+			cout << "out put else"<< endl;
+		}
         currentFileName = ssLeapData.str();
         currentLeftHandFileName = ssLeftHandData.str();
         currentRighthandFileName = ssRightHandData.str();

@@ -57,7 +57,7 @@ QVideoEncoder::~QVideoEncoder()
 
 bool QVideoEncoder::createFile(QString fileName,unsigned width,unsigned height,unsigned bitrate,unsigned gop,unsigned fps)
 {
-	std::string fileNamess = "test.mpeg";
+	std::string fileNamess = QString::QString(fileName).toStdString();
    // If we had an open video, close it.
    close();
    

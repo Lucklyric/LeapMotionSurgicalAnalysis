@@ -13,6 +13,8 @@
 #include <QDateTime>
 #include <Qdir>
 #include <QThread>
+#include <QVector>
+#include <QImage>
 
 class LeapMotionQt : public QMainWindow
 {
@@ -26,6 +28,8 @@ public:
 	Ui::LeapMotionQtClass ui;
 	SynchronizeRecorder* mySynchronizeRecorder;
 	QThread* myRecorderThread;
+	public slots:
+	void exportingTheVideoSequence(QVector<QImage>* imageSequence);
 };
 
 #endif // LEAPMOTIONQT_H

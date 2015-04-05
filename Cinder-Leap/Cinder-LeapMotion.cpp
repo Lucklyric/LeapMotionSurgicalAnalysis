@@ -186,8 +186,7 @@ namespace LeapMotion {
 
 		if (mRecording){
 			this->recordingCount++;
-			mDataRecorder->ParseCurrentFrametoFile(controller.frame());
-			mRecording = false;
+			mDataRecorder->ParseCurrentFrametoFile(controller.frame(),1);
 			//std::thread recordData(&Listener::recordCurrentFrame,this);
 		}
     }

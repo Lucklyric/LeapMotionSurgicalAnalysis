@@ -27,7 +27,7 @@ public:
 	long int leftHandId;
 	long int rightHandId;
     DataRecorder();
-    void ParseCurrentFrametoFile(Leap::Frame currentFrame);
+    void ParseCurrentFrametoFile(Leap::Frame currentFrame,int flag = 0);
     void EndReocrding();
     void WriteToLeftHandFile(Leap::Hand leftHand);
     void WriteToRightHandFile(Leap::Hand rightHand);

@@ -139,6 +139,58 @@
      <string>StopCamera</string>
     </property>
    </widget>
+   <widget class="QSlider" name="motionFrameBar">
+    <property name="geometry">
+     <rect>
+      <x>800</x>
+      <y>450</y>
+      <width>351</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Horizontal</enum>
+    </property>
+   </widget>
+   <widget class="QSlider" name="videoFrameBar">
+    <property name="geometry">
+     <rect>
+      <x>800</x>
+      <y>500</y>
+      <width>351</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Horizontal</enum>
+    </property>
+   </widget>
+   <widget class="QLabel" name="motionFrame">
+    <property name="geometry">
+     <rect>
+      <x>770</x>
+      <y>430</y>
+      <width>211</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>MtionFrame:</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="videoFrame">
+    <property name="geometry">
+     <rect>
+      <x>770</x>
+      <y>480</y>
+      <width>211</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>MtionFrame:</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
@@ -154,6 +206,7 @@
      <string>File</string>
     </property>
     <addaction name="actionImport"/>
+    <addaction name="actionImport_Video"/>
    </widget>
    <addaction name="menuFile"/>
   </widget>
@@ -167,7 +220,12 @@
   </widget>
   <action name="actionImport">
    <property name="text">
-    <string>Import</string>
+    <string>Import Motion</string>
+   </property>
+  </action>
+  <action name="actionImport_Video">
+   <property name="text">
+    <string>Import Video</string>
    </property>
   </action>
  </widget>
@@ -179,10 +237,14 @@
    <header>LeapQtGl.h</header>
    <container>1</container>
    <slots>
+    <signal>loadedFrame(int,int)</signal>
+    <signal>buttonChangedFrame(int)</signal>
+    <signal>setFrameLabelTex(QString)</signal>
     <slot>startRecording()</slot>
     <slot>importFile()</slot>
     <slot>lastFrame()</slot>
     <slot>nextFrame()</slot>
+    <slot>changeToFrame(int)</slot>
    </slots>
   </customwidget>
   <customwidget>
@@ -192,8 +254,12 @@
    <container>1</container>
    <slots>
     <signal>cameraConnected()</signal>
+    <signal>loadedFrame(int,int)</signal>
+    <signal>setFrameLabelTex(QString)</signal>
     <slot>toggleRecording()</slot>
     <slot>killWokerTimer()</slot>
+    <slot>importVideo()</slot>
+    <slot>changeReaplyingIndex(int)</slot>
    </slots>
   </customwidget>
  </customwidgets>
@@ -294,6 +360,134 @@
     <hint type="destinationlabel">
      <x>980</x>
      <y>223</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>motionFrameBar</sender>
+   <signal>sliderMoved(int)</signal>
+   <receiver>mLeapWidget</receiver>
+   <slot>changeToFrame(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>834</x>
+     <y>493</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>654</x>
+     <y>467</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>mLeapWidget</sender>
+   <signal>loadedFrame(int,int)</signal>
+   <receiver>motionFrameBar</receiver>
+   <slot>setRange(int,int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>715</x>
+     <y>518</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>938</x>
+     <y>497</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>mLeapWidget</sender>
+   <signal>buttonChangedFrame(int)</signal>
+   <receiver>motionFrameBar</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>672</x>
+     <y>340</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1018</x>
+     <y>497</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>mLeapWidget</sender>
+   <signal>setFrameLabelTex(QString)</signal>
+   <receiver>motionFrame</receiver>
+   <slot>setText(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>702</x>
+     <y>424</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>798</x>
+     <y>475</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionImport_Video</sender>
+   <signal>triggered()</signal>
+   <receiver>mCamera</receiver>
+   <slot>importVideo()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>980</x>
+     <y>223</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>mCamera</sender>
+   <signal>loadedFrame(int,int)</signal>
+   <receiver>videoFrameBar</receiver>
+   <slot>setRange(int,int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1066</x>
+     <y>338</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1075</x>
+     <y>550</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>videoFrameBar</sender>
+   <signal>sliderMoved(int)</signal>
+   <receiver>mCamera</receiver>
+   <slot>changeReaplyingIndex(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1043</x>
+     <y>539</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1036</x>
+     <y>362</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>mCamera</sender>
+   <signal>setFrameLabelTex(QString)</signal>
+   <receiver>videoFrame</receiver>
+   <slot>setText(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>978</x>
+     <y>378</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>780</x>
+     <y>525</y>
     </hint>
    </hints>
   </connection>

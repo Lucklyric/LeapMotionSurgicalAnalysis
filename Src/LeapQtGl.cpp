@@ -42,22 +42,24 @@ void LeapQtGl::initializeGL(){
 	mLeap = LeapMotion::Device::create();
 	mLeap->connectEventHandler(&LeapQtGl::onFrame, this);
 	connect(&myTimer, SIGNAL(timeout()), this, SLOT(updateGL()));
-	myTimer.start((1/120)*1000);
+	myTimer.start((1/60)*1000);
 }
 
 void LeapQtGl::updateGL(){
 	QGLWidget::updateGL();
-	
 	if (isReplaying){
-		
 		mFrame = deserializedFrames[mRecordingFrameIndex];
+		QString labelTex = "MotionFrame:" + QString::number(mRecordingFrameIndex + 1) + "/" + QString::number(deserializedFrames.size());
+		emit setFrameLabelTex(labelTex);
 		//std::cout << "current frame id:" << mFrame.id() << std::endl;
 	}else{
 		emit callCameraUpdate();
 		emit sendOneMotionFrame(mFrame);
-		updateGenearlInfo();
+		//cout << mRecordingFrameIndex<<endl;
+		//mRecordingFrameIndex++;
 		mLeap->update();
 	}
+	updateGenearlInfo();
 }
 
 void LeapQtGl::paintGL(){
@@ -275,12 +277,12 @@ void LeapQtGl::startRecording(){
 		pushButton->setText("StartRecording");
 		isRecording = false;
 		cout << "OutputFile" <<endl;
-		//mLeap->outPutRecordingFile();
+		mLeap->outPutRecordingFile();
 	}else{
 		pushButton->setText("StopRecording");
 		isRecording = true;
 		cout << "StartRecoridng" << endl;
-		//mLeap->startRecording();
+		mLeap->startRecording();
 	}
 }
 
@@ -316,23 +318,33 @@ void LeapQtGl::importFile(){
 	isReplaying = true;
 	mRecordingFrameIndex = 0;
 	std::cout << "Loaded File No. of frame "<<deserializedFrames.size() << std::endl;
+	emit loadedFrame(0,deserializedFrames.size()-1);
+	//emit setFrameLabelTex("aaaaaa");
 }
 
 void LeapQtGl::lastFrame(){
 	if (mRecordingFrameIndex >= 0){
 		mRecordingFrameIndex--;
+		emit buttonChangedFrame(mRecordingFrameIndex);
 	}
 }
 
 void LeapQtGl::nextFrame(){
 	if (mRecordingFrameIndex <= deserializedFrames.size()-1){
 		mRecordingFrameIndex++;
+		emit buttonChangedFrame(mRecordingFrameIndex);
 	}
+}
+
+void LeapQtGl::changeToFrame(int index){
+	mRecordingFrameIndex = index;
 }
 
 void LeapQtGl::updateGenearlInfo(){
 	LeapMotionQt* thisParent = dynamic_cast<LeapMotionQt*>(this->mParent);
 	thisParent->ui.dFps->setText(QString::number(mLeap->returnDeviceFrequency()));
+	//QString labelTex = "MotionFrame:" + QString::number(mRecordingFrameIndex + 1) + "/" + QString::number(deserializedFrames.size());
+	//thisParent->ui.motionFrame->setText("aaaaa");
 }
 void LeapQtGl::resizeGL(int w, int h){
 	glViewport(0, 0, w, h);
