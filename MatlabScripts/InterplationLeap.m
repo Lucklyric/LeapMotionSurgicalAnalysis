@@ -2,13 +2,13 @@
 
 
 % Load raw data from text (ASCII) file
- 
+format long; 
 %Left hand raw data Sample1
-Lraw = importdata('LeftHand-2015-3-28-14-49-17.txt',' ',1); %imports data and ignores first row (headers)
+Lraw = importdata('D:\Code\LeapMotionQt\LeapMotionQt\LeapMotionQt\SampleOutPut\Case2\Output\RgithHand-2015-4-5-14-45-50.txt',' ',1); %imports data and ignores first row (headers)
 %Left hand raw data Sample2
 
 % Define the fixed timeinterval in microseconds
-frequency = 50; %preset variable
+frequency = 60; %preset variable
 
 
 LrawX = Lraw.data(1:end,10);
@@ -37,11 +37,6 @@ while currentTimeStamp < LrawTime(end)
    interpTime(index+1) = currentTimeStamp;
    index = index+1;
 end
-
-
-
-
-
 
 % Read coordinate data (PalmX, PalmY, PalmZ)
 xL = interpX;   
@@ -84,7 +79,7 @@ time = (timemicro - interpTime(1,1))/1000000;   %subtracts first timestamp from 
 
 % Filtering Algorithm
 cutoff = 10;   %Frequency cutoff in Hz
-samplerate = 50;  %Samplerate in Hz
+samplerate = 60;  %Samplerate in Hz
 Wn = cutoff / (samplerate/2);
 [B,A] = butter (2,Wn);
 xL_filtered = filtfilt (B,A,xL);
