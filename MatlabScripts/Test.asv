@@ -1,0 +1,17 @@
+sum = 0;
+for n=1:length(Case7ObSequence)
+    autoGenerage = hmmgenerate(n,TRANS,EMIS);
+    [~,loglikLL] =  hmmdecode(autoGenerage,TRANS,EMIS);
+    sum = sum + loglikLL;
+end
+
+loglik7 = hmmdecode(Case7ObSequence,TRANS,EMIS);
+
+Euqation = 0;
+for n=1:length(Case7ObSequence)
+    autoGenerage = hmmgenerate(n,TRANS,EMIS);
+    [~,loglikLL] =  hmmdecode(autoGenerage,TRANS,EMIS);
+    Euqation = abs(loglikLL - sum);
+end
+
+Sm = abs(loglik7-sum)/Euqation

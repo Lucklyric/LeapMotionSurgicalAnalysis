@@ -185,7 +185,7 @@ string DataRecorder::ParseOneRowHandInformation(Leap::Hand hand){
 	float sphereRadius = hand.sphereRadius();
 
 
-
+	
 
     std::stringstream oneRowString;
     oneRowString << handDir.x << " " << handDir.y << " " << handDir.z 

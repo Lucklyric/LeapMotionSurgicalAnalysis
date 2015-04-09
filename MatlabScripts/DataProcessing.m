@@ -1,10 +1,11 @@
-% Leap Motion Data Processing Script
-
+function [ ModifiedDataArray ] = DataProcessing( filename )
+%UNTITLED4 Summary of this function goes here
+%   Detailed explanation goes here
 
 % Load raw data from text (ASCII) file
 format long; 
 %Left hand raw data Sample1
-Lraw = importdata('D:\Code\LeapMotionQt\LeapMotionQt\LeapMotionQt\SampleOutPut\Case8\Output\RgithHand-2015-4-8-14-51-11.txt',' ',1); %imports data and ignores first row (headers)
+Lraw = importdata(filename,' ',1); %imports data and ignores first row (headers)
 %Left hand raw data Sample2
 
 % Define the fixed timeinterval in microseconds
@@ -19,9 +20,10 @@ LrawY = Lraw.data(2:end,14);
 
 LrawZ = Lraw.data(2:end,15);
 %LrawZ = (LrawZ - LrawZ(1,1));
-
 LrawTime = Lraw.data(1:end,2);
 
+%LrawFrameID
+LrawID = Lraw.data(2:end,3);
 LrawSphereSize = Lraw.data(1:end,16);
 
 LrawSphere=zeros(numel(LrawSphereSize)-1,1);
@@ -30,6 +32,7 @@ for index=2:numel(LrawSphereSize)
     LrawSphere(index-1) = (LrawSphereSize(index)-LrawSphereSize(index-1))/(LrawTime(index)-LrawTime(index-1));
     %LrawSphere(index-1) = LrawSphereSize(index);
 end
+
 
 
 
@@ -110,3 +113,8 @@ title('Sphere velocity data - filtered');
 % ylabel('y','rotation',0);
 % zlabel('z','rotation',0);
 % title('3D position data - filtered');
+
+ModifiedDataArray={xL_filtered,yL_filtered,zL_filtered,sL_filtered,LrawTime,LrawID,interpTime};
+
+end
+

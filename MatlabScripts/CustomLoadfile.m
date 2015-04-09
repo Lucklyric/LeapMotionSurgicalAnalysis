@@ -1,7 +1,6 @@
-function [ dataArray ] = CustomLoadfile( fileName )
+function [ dataArray ] = CustomLoadfile( filename )
 %UNTITLED8 Summary of this function goes here
 %   Detailed explanation goes here
-filename = 'D:\Code\LeapMotionQt\LeapMotionQt\LeapMotionQt\SampleOutPut\Case2\Output\RgithHand-2015-4-5-14-45-50.txt';
 delimiter = ' ';
 startRow = 2;
 formatSpec = '%f%f%f%f%f%f%f%f%f%f%f%f%f%f%f%f%f%[^\n\r]';

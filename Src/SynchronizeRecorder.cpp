@@ -31,7 +31,6 @@ void SynchronizeRecorder::parseOneVideoFrame(QImage mImage){
 	if (!isRecording) return;
 	//cout << "parse one video" <<endl;
 	imageSequence->push_back(mImage);
-	
 }
 
 void SynchronizeRecorder::stopRecording(){

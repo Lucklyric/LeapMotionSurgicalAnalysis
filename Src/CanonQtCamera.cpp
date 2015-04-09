@@ -47,7 +47,7 @@ void CanonQtCamera::updateCamera(){
 
 	if (isReplaying)
 	{
-		QString labelTex = "MotionFrame:" + QString::number(replayingindex + 1) + "/" + QString::number(currentImagesCount);
+		QString labelTex = "VideoFrame:" + QString::number(replayingindex + 1) + "/" + QString::number(currentImagesCount);
 		emit setFrameLabelTex(labelTex);
 		mImage = QImage(replayImagesFolder+"/"+QString::number(replayingindex)+".jpeg");
 		
@@ -103,8 +103,8 @@ void CanonQtCamera::importVideo(){
 	QDir countFiled;
 	countFiled.setPath(qName);
 	//std::string fileName = qName.toUtf8().constData();
-	//std::cout << countFiled.count()  << std::endl;
-	currentImagesCount = countFiled.count();
+	std::cout << countFiled.count()  << std::endl;
+	currentImagesCount = countFiled.count()-2;
 	emit loadedFrame(0, currentImagesCount-1);
 }
 
