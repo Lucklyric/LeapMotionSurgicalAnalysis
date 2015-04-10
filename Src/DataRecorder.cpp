@@ -182,7 +182,15 @@ string DataRecorder::ParseOneRowHandInformation(Leap::Hand hand){
     cinder::Vec3f palmPos		= LeapMotion::toVec3f( hand.palmPosition() );
     cinder::Vec3f palmVel		= LeapMotion::toVec3f( hand.palmVelocity() );
 	cinder::Vec3f sphereCenter  = LeapMotion::toVec3f( hand.sphereCenter() );
-	float sphereRadius = hand.sphereRadius();
+	
+	
+	cinder::Vec3f thumDir = LeapMotion::toVec3f((hand.fingers().fingerType(Leap::Finger::TYPE_THUMB))[0].tipPosition());
+	cinder::Vec3f midDir = LeapMotion::toVec3f((hand.fingers().fingerType(Leap::Finger::TYPE_MIDDLE))[0].tipPosition());
+	float angle = thumDir.distance(midDir);
+
+	//float dot = thumDir.dot(midDir);
+	//float angle = acos(dot / (thumDir.length()*midDir.length()));
+	//float sphereRadius = hand.sphereRadius();
 
 
 	
@@ -192,7 +200,7 @@ string DataRecorder::ParseOneRowHandInformation(Leap::Hand hand){
 		<< " " << palmNorm.x << " " << palmNorm.y << " " << palmNorm.z 
 		<< " " << palmPos.x << " " << palmPos.y << " " << palmPos.z 
 		<< " " << palmVel.x << " " << palmVel.y << " " << palmVel.z 
-		<< " " << sphereRadius << " " << hand.confidence();
+		<< " " << angle << " " << hand.confidence();
     
 
     return oneRowString.str();

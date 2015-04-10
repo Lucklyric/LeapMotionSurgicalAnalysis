@@ -113,8 +113,8 @@ void LeapQtGl::drawHands(){
 		Vec3f palmVel = LeapMotion::toVec3f(hand.palmVelocity());
 		Vec3f sphereCenter = LeapMotion::toVec3f(hand.sphereCenter());
 		float sphereRadius = hand.sphereRadius();
-		
-
+		gl::color(1.0f, 0.0f, 1.0f, 1.0f);
+		//gl::drawSphere(sphereCenter,sphereRadius,12);
 		// Hand normal
 		gl::color(1.0f, 1.0f, 1.0f, 1.0f);
 
@@ -288,6 +288,7 @@ void LeapQtGl::startRecording(){
 }
 
 void LeapQtGl::importFile(){
+	isReplaying = false;
 	deserializedFrames.clear();
 	QString qName = QFileDialog::getOpenFileName();
 	std::string fileName = qName.toUtf8().constData();

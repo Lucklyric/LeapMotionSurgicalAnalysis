@@ -8,9 +8,10 @@ for n=1:length(ObserveSequence)
     sum = sum + loglikLL;
 end
 sum = sum/length(ObserveSequence);
-
+disp('SUM:');
+disp(sum);
 [~,loglik] = hmmdecode(ObserveSequence,Trans,Emis);
-
+disp(loglik);
 Euqation = 0;
 for n=1:length(ObserveSequence)
     autoGenerage = hmmgenerate(n,Trans,Emis);
@@ -18,7 +19,7 @@ for n=1:length(ObserveSequence)
     Euqation = Euqation + abs(loglikLL - sum);
 end
 Euqation = Euqation/length(ObserveSequence);
-
+disp(Euqation);
 Distance = abs(loglik-sum)/Euqation;
 
 end

@@ -4,7 +4,7 @@
 % Load raw data from text (ASCII) file
 format long; 
 %Left hand raw data Sample1
-Lraw = importdata('D:\Code\LeapMotionQt\LeapMotionQt\LeapMotionQt\SampleOutPut\Case8\Output\RgithHand-2015-4-8-14-51-11.txt',' ',1); %imports data and ignores first row (headers)
+Lraw = importdata('D:\Code\LeapMotionQt\LeapMotionQt\LeapMotionQt\SampleOutPut\Case9\Output\RgithHand-2015-4-10-12-57-42.txt',' ',1); %imports data and ignores first row (headers)
 %Left hand raw data Sample2
 
 % Define the fixed timeinterval in microseconds
@@ -27,7 +27,7 @@ LrawSphereSize = Lraw.data(1:end,16);
 LrawSphere=zeros(numel(LrawSphereSize)-1,1);
 
 for index=2:numel(LrawSphereSize)
-    LrawSphere(index-1) = (LrawSphereSize(index)-LrawSphereSize(index-1))/(LrawTime(index)-LrawTime(index-1));
+    LrawSphere(index-1) = 1000000*(LrawSphereSize(index)-LrawSphereSize(index-1))/(LrawTime(index)-LrawTime(index-1));
     %LrawSphere(index-1) = LrawSphereSize(index);
 end
 
@@ -67,7 +67,7 @@ time = (timemicro - interpTime(1,1))/1000000;   %subtracts first timestamp from 
 
 
 % Filtering Algorithm
-cutoff = 10;   %Frequency cutoff in Hz
+cutoff = 1;   %Frequency cutoff in Hz
 samplerate = 60;  %Samplerate in Hz
 Wn = cutoff / (samplerate/2);
 [B,A] = butter (2,Wn);

@@ -37,6 +37,7 @@ LeapMotionQt::~LeapMotionQt()
 
 
 void LeapMotionQt::exportingTheVideoSequence(QVector<QImage>* imageSequence){
+	if (!ui.radioCheckForVideo->isChecked())return;
 	if (!QDir("VideoStreams").exists()) QDir().mkdir("VideoStreams/");
 	QProgressDialog progress("Exporting Video Sequences", "Abort Export", 0, imageSequence->size());
 	progress.setWindowModality(Qt::WindowModal);

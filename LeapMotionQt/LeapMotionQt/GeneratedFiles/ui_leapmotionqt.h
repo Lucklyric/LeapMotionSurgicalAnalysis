@@ -21,6 +21,7 @@
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPushButton>
+#include <QtWidgets/QRadioButton>
 #include <QtWidgets/QSlider>
 #include <QtWidgets/QToolBar>
 #include <QtWidgets/QWidget>
@@ -50,6 +51,7 @@ public:
     QSlider *videoFrameBar;
     QLabel *motionFrame;
     QLabel *videoFrame;
+    QRadioButton *radioCheckForVideo;
     QMenuBar *menuBar;
     QMenu *menuFile;
     QMenu *menuEtra;
@@ -128,6 +130,12 @@ public:
         videoFrame = new QLabel(centralWidget);
         videoFrame->setObjectName(QStringLiteral("videoFrame"));
         videoFrame->setGeometry(QRect(770, 480, 211, 16));
+        radioCheckForVideo = new QRadioButton(centralWidget);
+        radioCheckForVideo->setObjectName(QStringLiteral("radioCheckForVideo"));
+        radioCheckForVideo->setEnabled(true);
+        radioCheckForVideo->setGeometry(QRect(770, 410, 82, 17));
+        radioCheckForVideo->setChecked(false);
+        radioCheckForVideo->setAutoRepeat(false);
         LeapMotionQtClass->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(LeapMotionQtClass);
         menuBar->setObjectName(QStringLiteral("menuBar"));
@@ -182,6 +190,7 @@ public:
         stopCamera->setText(QApplication::translate("LeapMotionQtClass", "StopCamera", 0));
         motionFrame->setText(QApplication::translate("LeapMotionQtClass", "MtionFrame:", 0));
         videoFrame->setText(QApplication::translate("LeapMotionQtClass", "MtionFrame:", 0));
+        radioCheckForVideo->setText(QApplication::translate("LeapMotionQtClass", "ExportVideo", 0));
         menuFile->setTitle(QApplication::translate("LeapMotionQtClass", "File", 0));
         menuEtra->setTitle(QApplication::translate("LeapMotionQtClass", "Etra", 0));
     } // retranslateUi
