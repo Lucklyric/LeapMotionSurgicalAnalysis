@@ -22,6 +22,10 @@ LrawZ = Lraw.data(2:end,15);
 %LrawZ = (LrawZ - LrawZ(1,1));
 LrawTime = Lraw.data(1:end,2);
 
+LrawPosX =  Lraw.data(2:end,10);
+LrawPosY =  Lraw.data(2:end,11);
+LrawPosZ =  Lraw.data(2:end,12);
+
 %LrawFrameID
 LrawID = Lraw.data(2:end,3);
 LrawSphereSize = Lraw.data(1:end,16);
@@ -43,6 +47,9 @@ LrawTime = LrawTime(2:end);
 interpX=[];
 interpY=[];
 interpZ=[];
+interpPosX = [];
+interpPosY = [];
+interpPosZ = [];
 interpS=[];
 interpTime=[];
 index = 0;
@@ -52,6 +59,9 @@ while currentTimeStamp < LrawTime(end)
    interpX(index+1) = interp1(LrawTime,LrawX,currentTimeStamp,'pchip');
    interpY(index+1) = interp1(LrawTime,LrawY,currentTimeStamp,'pchip');
    interpZ(index+1) = interp1(LrawTime,LrawZ,currentTimeStamp,'pchip');
+   interpPosX(index+1) = interp1(LrawTime,LrawPosX,currentTimeStamp,'pchip');
+   interpPosY(index+1) = interp1(LrawTime,LrawPosY,currentTimeStamp,'pchip');
+   interpPosZ(index+1) = interp1(LrawTime,LrawPosZ,currentTimeStamp,'pchip');
    interpS(index+1) = interp1(LrawTime,LrawSphere,currentTimeStamp,'pchip');
    interpTime(index+1) = currentTimeStamp;
    index = index+1;
@@ -61,6 +71,9 @@ end
 xL = interpX;   
 yL = interpY;
 zL = interpZ;
+posXL = interpPosX;
+posYL = interpPosY;
+posZL = interpPosZ;
 zS = interpS;
 
 % Define time based on timestamp in microseconds
@@ -77,6 +90,9 @@ Wn = cutoff / (samplerate/2);
 xL_filtered = filtfilt (B,A,xL);
 yL_filtered = filtfilt (B,A,yL);
 zL_filtered = filtfilt (B,A,zL);
+posXL_filtered = filtfilt (B,A,posXL);
+posYL_filtered = filtfilt (B,A,posYL);
+posZL_filtered = filtfilt (B,A,posZL);
 sL_filtered = filtfilt (B,A,zS);
 
 %Plot filtered data
@@ -114,7 +130,7 @@ title('Sphere velocity data - filtered');
 % zlabel('z','rotation',0);
 % title('3D position data - filtered');
 
-ModifiedDataArray={xL_filtered,yL_filtered,zL_filtered,sL_filtered,LrawTime,LrawID,interpTime};
+ModifiedDataArray={xL_filtered,yL_filtered,zL_filtered,sL_filtered,LrawTime,LrawID,interpTime,posXL_filtered,posYL_filtered,posZL_filtered};
 
 end
 

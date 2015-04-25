@@ -23,6 +23,7 @@
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QRadioButton>
 #include <QtWidgets/QSlider>
+#include <QtWidgets/QTabWidget>
 #include <QtWidgets/QToolBar>
 #include <QtWidgets/QWidget>
 #include "CanonQtCamera.h"
@@ -42,16 +43,21 @@ public:
     QGridLayout *gridLayout;
     QLabel *ldFps;
     QLabel *dFps;
-    QPushButton *recordingButton;
-    QPushButton *pushButton;
-    QPushButton *pushButton_2;
     CanonQtCamera *mCamera;
+    QTabWidget *tabWidget;
+    QWidget *recording;
+    QPushButton *recordingButton;
     QPushButton *stopCamera;
-    QSlider *motionFrameBar;
-    QSlider *videoFrameBar;
-    QLabel *motionFrame;
-    QLabel *videoFrame;
     QRadioButton *radioCheckForVideo;
+    QWidget *replaying;
+    QPushButton *pushButton_3;
+    QLabel *videoFrame;
+    QLabel *motionFrame;
+    QSlider *videoFrameBar;
+    QSlider *motionFrameBar;
+    QRadioButton *radioButton;
+    QPushButton *pushButton_2;
+    QPushButton *pushButton;
     QMenuBar *menuBar;
     QMenu *menuFile;
     QMenu *menuEtra;
@@ -99,43 +105,59 @@ public:
 
         gridLayout->addWidget(dFps, 0, 1, 1, 1);
 
-        recordingButton = new QPushButton(centralWidget);
-        recordingButton->setObjectName(QStringLiteral("recordingButton"));
-        recordingButton->setGeometry(QRect(760, 380, 111, 23));
-        pushButton = new QPushButton(centralWidget);
-        pushButton->setObjectName(QStringLiteral("pushButton"));
-        pushButton->setGeometry(QRect(870, 380, 31, 23));
-        pushButton_2 = new QPushButton(centralWidget);
-        pushButton_2->setObjectName(QStringLiteral("pushButton_2"));
-        pushButton_2->setGeometry(QRect(900, 380, 31, 23));
         mCamera = new CanonQtCamera(centralWidget);
         mCamera->setObjectName(QStringLiteral("mCamera"));
         mCamera->setGeometry(QRect(760, 0, 441, 381));
         mCamera->setAutoFillBackground(false);
         mCamera->setStyleSheet(QStringLiteral("background-color: rgb(143, 250, 255)"));
-        stopCamera = new QPushButton(centralWidget);
+        tabWidget = new QTabWidget(centralWidget);
+        tabWidget->setObjectName(QStringLiteral("tabWidget"));
+        tabWidget->setGeometry(QRect(760, 380, 441, 211));
+        tabWidget->setStyleSheet(QStringLiteral(""));
+        recording = new QWidget();
+        recording->setObjectName(QStringLiteral("recording"));
+        recordingButton = new QPushButton(recording);
+        recordingButton->setObjectName(QStringLiteral("recordingButton"));
+        recordingButton->setGeometry(QRect(10, 50, 111, 71));
+        stopCamera = new QPushButton(recording);
         stopCamera->setObjectName(QStringLiteral("stopCamera"));
-        stopCamera->setGeometry(QRect(1120, 380, 81, 23));
-        motionFrameBar = new QSlider(centralWidget);
-        motionFrameBar->setObjectName(QStringLiteral("motionFrameBar"));
-        motionFrameBar->setGeometry(QRect(800, 450, 351, 22));
-        motionFrameBar->setOrientation(Qt::Horizontal);
-        videoFrameBar = new QSlider(centralWidget);
-        videoFrameBar->setObjectName(QStringLiteral("videoFrameBar"));
-        videoFrameBar->setGeometry(QRect(800, 500, 351, 22));
-        videoFrameBar->setOrientation(Qt::Horizontal);
-        motionFrame = new QLabel(centralWidget);
-        motionFrame->setObjectName(QStringLiteral("motionFrame"));
-        motionFrame->setGeometry(QRect(770, 430, 211, 16));
-        videoFrame = new QLabel(centralWidget);
-        videoFrame->setObjectName(QStringLiteral("videoFrame"));
-        videoFrame->setGeometry(QRect(770, 480, 211, 16));
-        radioCheckForVideo = new QRadioButton(centralWidget);
+        stopCamera->setGeometry(QRect(300, 50, 111, 71));
+        radioCheckForVideo = new QRadioButton(recording);
         radioCheckForVideo->setObjectName(QStringLiteral("radioCheckForVideo"));
         radioCheckForVideo->setEnabled(true);
-        radioCheckForVideo->setGeometry(QRect(770, 410, 82, 17));
+        radioCheckForVideo->setGeometry(QRect(10, 10, 82, 17));
         radioCheckForVideo->setChecked(false);
         radioCheckForVideo->setAutoRepeat(false);
+        tabWidget->addTab(recording, QString());
+        replaying = new QWidget();
+        replaying->setObjectName(QStringLiteral("replaying"));
+        pushButton_3 = new QPushButton(replaying);
+        pushButton_3->setObjectName(QStringLiteral("pushButton_3"));
+        pushButton_3->setGeometry(QRect(0, 130, 75, 51));
+        videoFrame = new QLabel(replaying);
+        videoFrame->setObjectName(QStringLiteral("videoFrame"));
+        videoFrame->setGeometry(QRect(10, 80, 211, 16));
+        motionFrame = new QLabel(replaying);
+        motionFrame->setObjectName(QStringLiteral("motionFrame"));
+        motionFrame->setGeometry(QRect(10, 30, 211, 16));
+        videoFrameBar = new QSlider(replaying);
+        videoFrameBar->setObjectName(QStringLiteral("videoFrameBar"));
+        videoFrameBar->setGeometry(QRect(40, 100, 351, 22));
+        videoFrameBar->setOrientation(Qt::Horizontal);
+        motionFrameBar = new QSlider(replaying);
+        motionFrameBar->setObjectName(QStringLiteral("motionFrameBar"));
+        motionFrameBar->setGeometry(QRect(40, 50, 351, 22));
+        motionFrameBar->setOrientation(Qt::Horizontal);
+        radioButton = new QRadioButton(replaying);
+        radioButton->setObjectName(QStringLiteral("radioButton"));
+        radioButton->setGeometry(QRect(0, 10, 101, 17));
+        pushButton_2 = new QPushButton(replaying);
+        pushButton_2->setObjectName(QStringLiteral("pushButton_2"));
+        pushButton_2->setGeometry(QRect(130, 130, 51, 51));
+        pushButton = new QPushButton(replaying);
+        pushButton->setObjectName(QStringLiteral("pushButton"));
+        pushButton->setGeometry(QRect(80, 130, 51, 51));
+        tabWidget->addTab(replaying, QString());
         LeapMotionQtClass->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(LeapMotionQtClass);
         menuBar->setObjectName(QStringLiteral("menuBar"));
@@ -171,6 +193,15 @@ public:
         QObject::connect(videoFrameBar, SIGNAL(sliderMoved(int)), mCamera, SLOT(changeReaplyingIndex(int)));
         QObject::connect(mCamera, SIGNAL(setFrameLabelTex(QString)), videoFrame, SLOT(setText(QString)));
         QObject::connect(actionOutputDataFile, SIGNAL(triggered()), mLeapWidget, SLOT(reOutPutDataFile()));
+        QObject::connect(radioButton, SIGNAL(clicked(bool)), mLeapWidget, SLOT(synchroMode(bool)));
+        QObject::connect(radioButton, SIGNAL(clicked(bool)), mCamera, SLOT(synchroMode(bool)));
+        QObject::connect(mLeapWidget, SIGNAL(changeCameraIndex(int)), videoFrameBar, SLOT(setValue(int)));
+        QObject::connect(videoFrameBar, SIGNAL(valueChanged(int)), mCamera, SLOT(changeReaplyingIndex(int)));
+        QObject::connect(motionFrameBar, SIGNAL(valueChanged(int)), mLeapWidget, SLOT(changeToFrame(int)));
+        QObject::connect(pushButton_3, SIGNAL(clicked()), mLeapWidget, SLOT(autoPlayMode()));
+
+        tabWidget->setCurrentIndex(1);
+
 
         QMetaObject::connectSlotsByName(LeapMotionQtClass);
     } // setupUi
@@ -185,12 +216,16 @@ public:
         ldFps->setText(QApplication::translate("LeapMotionQtClass", "<html><head/><body><p><span style=\" color:#ffffff;\">deviceFps:</span></p></body></html>", 0));
         dFps->setText(QApplication::translate("LeapMotionQtClass", "0", 0));
         recordingButton->setText(QApplication::translate("LeapMotionQtClass", "Start Recording", 0));
-        pushButton->setText(QApplication::translate("LeapMotionQtClass", "<", 0));
-        pushButton_2->setText(QApplication::translate("LeapMotionQtClass", ">", 0));
         stopCamera->setText(QApplication::translate("LeapMotionQtClass", "StopCamera", 0));
-        motionFrame->setText(QApplication::translate("LeapMotionQtClass", "MtionFrame:", 0));
-        videoFrame->setText(QApplication::translate("LeapMotionQtClass", "MtionFrame:", 0));
         radioCheckForVideo->setText(QApplication::translate("LeapMotionQtClass", "ExportVideo", 0));
+        tabWidget->setTabText(tabWidget->indexOf(recording), QApplication::translate("LeapMotionQtClass", "Recorder", 0));
+        pushButton_3->setText(QApplication::translate("LeapMotionQtClass", "Play", 0));
+        videoFrame->setText(QApplication::translate("LeapMotionQtClass", "MtionFrame:", 0));
+        motionFrame->setText(QApplication::translate("LeapMotionQtClass", "MtionFrame:", 0));
+        radioButton->setText(QApplication::translate("LeapMotionQtClass", "Synchronization", 0));
+        pushButton_2->setText(QApplication::translate("LeapMotionQtClass", ">", 0));
+        pushButton->setText(QApplication::translate("LeapMotionQtClass", "<", 0));
+        tabWidget->setTabText(tabWidget->indexOf(replaying), QApplication::translate("LeapMotionQtClass", "Replayer", 0));
         menuFile->setTitle(QApplication::translate("LeapMotionQtClass", "File", 0));
         menuEtra->setTitle(QApplication::translate("LeapMotionQtClass", "Etra", 0));
     } // retranslateUi

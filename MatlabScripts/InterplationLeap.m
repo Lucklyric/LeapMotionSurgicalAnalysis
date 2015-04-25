@@ -4,7 +4,7 @@
 % Load raw data from text (ASCII) file
 format long; 
 %Left hand raw data Sample1
-Lraw = importdata('D:\Code\LeapMotionQt\LeapMotionQt\LeapMotionQt\SampleOutPut\Case9\Output\RgithHand-2015-4-10-12-57-42.txt',' ',1); %imports data and ignores first row (headers)
+Lraw = importdata('D:\Code\LeapMotionQt\LeapMotionQt\LeapMotionQt\SampleOutPut\Case3\Output\RgithHand-2015-4-10-12-54-55.txt',' ',1); %imports data and ignores first row (headers)
 %Left hand raw data Sample2
 
 % Define the fixed timeinterval in microseconds

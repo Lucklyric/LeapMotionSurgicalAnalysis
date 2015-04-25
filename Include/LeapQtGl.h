@@ -43,7 +43,7 @@ public:
 	Vec3f mTranslate;
 	vector<Leap::Frame> deserializedFrames;
 	bool mStaticPosHand, mStaticOrientHand;
-	bool isRecording, isReplaying;
+	bool isRecording, isReplaying, isSynchMode,isAutoPlaying;
 	/** Handles mouse press events on the QGLWidget. */
 	void mousePressEvent(QMouseEvent *pEvent);
 
@@ -63,12 +63,15 @@ public:
 	void nextFrame();
 	public slots:
 	void changeToFrame(int index);
+	void synchroMode(bool flag);
+	void autoPlayMode();
 	void reOutPutDataFile();
 signals:
 	void callCameraUpdate();
 	void sendOneMotionFrame(Leap::Frame mFrame);
 	void loadedFrame(int start,int end);
 	void buttonChangedFrame(int index);
+	void changeCameraIndex(int index);
 	void setFrameLabelTex(QString mString);
 private:
 	QTimer myTimer;
@@ -79,7 +82,7 @@ private:
 	GLfloat fMoveUpDown;
 	GLfloat fMoveLeftRight;
 	GLfloat fMoveInOut;
-
+	
 	QSize viewport_size;					//< current size of the viewport.
 	QPoint lastPos;							//< last mose position
 

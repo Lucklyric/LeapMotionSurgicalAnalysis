@@ -25,6 +25,8 @@ void LeapQtGl::initializeGL(){
 	isReplaying = false;
 	mStaticOrientHand = false;
 	mStaticPosHand = false;
+	isSynchMode = false;
+	isAutoPlaying = false;
 
 	mScale = 1;
 	mRecordingFrameIndex = 0;
@@ -48,10 +50,16 @@ void LeapQtGl::initializeGL(){
 void LeapQtGl::updateGL(){
 	QGLWidget::updateGL();
 	if (isReplaying){
+		
 		mFrame = deserializedFrames[mRecordingFrameIndex];
 		QString labelTex = "MotionFrame:" + QString::number(mRecordingFrameIndex + 1) + "/" + QString::number(deserializedFrames.size())+"  FrameID:"+QString::number(mFrame.id());
 		emit setFrameLabelTex(labelTex);
 		emit callCameraUpdate();
+		if ((mRecordingFrameIndex == (deserializedFrames.size() - 1)) && isAutoPlaying){
+			mRecordingFrameIndex = 0;
+			emit buttonChangedFrame(mRecordingFrameIndex);
+		}
+		if (isAutoPlaying) nextFrame();
 		//std::cout << "current frame id:" << mFrame.id() << std::endl;
 	}else{
 		emit callCameraUpdate();
@@ -90,9 +98,9 @@ void LeapQtGl::drawHands(){
 	//gl::translate(mTranslate);
 	//gl::rotate(mObjOrientation);
 	glTranslatef(fMoveLeftRight, fMoveUpDown, fMoveInOut);
-	glRotatef(fRotationX/5000.0f, 1.0f, 0.0f, 0.0f);
-	glRotatef(fRotationY/5000.0f, 0.0f, 1.0f, 0.0f);
-	glRotatef(fRotationZ/5000.0f, 0.0f, 0.0f, 1.0f);
+	glRotatef(fRotationX/2500.0f, 1.0f, 0.0f, 0.0f);
+	glRotatef(fRotationY/2500.0f, 0.0f, 1.0f, 0.0f);
+	glRotatef(fRotationZ/2500.0f, 0.0f, 0.0f, 1.0f);
 
 	float headLength = 6.0f;
 	float headRadius = 3.0f;
@@ -349,10 +357,25 @@ void LeapQtGl::nextFrame(){
 		mRecordingFrameIndex++;
 		emit buttonChangedFrame(mRecordingFrameIndex);
 	}
+
+
+
 }
 
 void LeapQtGl::changeToFrame(int index){
 	mRecordingFrameIndex = index;
+	if (isSynchMode)
+	{
+		emit changeCameraIndex(index);
+	}
+}
+
+void LeapQtGl::synchroMode(bool flag){
+	isSynchMode = flag;
+}
+
+void LeapQtGl::autoPlayMode(){
+	isAutoPlaying = !isAutoPlaying;
 }
 
 void LeapQtGl::updateGenearlInfo(){

@@ -71,45 +71,6 @@
      </layout>
     </widget>
    </widget>
-   <widget class="QPushButton" name="recordingButton">
-    <property name="geometry">
-     <rect>
-      <x>760</x>
-      <y>380</y>
-      <width>111</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Start Recording</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="pushButton">
-    <property name="geometry">
-     <rect>
-      <x>870</x>
-      <y>380</y>
-      <width>31</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>&lt;</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="pushButton_2">
-    <property name="geometry">
-     <rect>
-      <x>900</x>
-      <y>380</y>
-      <width>31</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>&gt;</string>
-    </property>
-   </widget>
    <widget class="CanonQtCamera" name="mCamera" native="true">
     <property name="geometry">
      <rect>
@@ -126,92 +87,183 @@
      <string notr="true">background-color: rgb(143, 250, 255)</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="stopCamera">
+   <widget class="QTabWidget" name="tabWidget">
     <property name="geometry">
      <rect>
-      <x>1120</x>
+      <x>760</x>
       <y>380</y>
-      <width>81</width>
-      <height>23</height>
+      <width>441</width>
+      <height>211</height>
      </rect>
     </property>
-    <property name="text">
-     <string>StopCamera</string>
+    <property name="styleSheet">
+     <string notr="true"/>
     </property>
-   </widget>
-   <widget class="QSlider" name="motionFrameBar">
-    <property name="geometry">
-     <rect>
-      <x>800</x>
-      <y>450</y>
-      <width>351</width>
-      <height>22</height>
-     </rect>
+    <property name="currentIndex">
+     <number>1</number>
     </property>
-    <property name="orientation">
-     <enum>Qt::Horizontal</enum>
-    </property>
-   </widget>
-   <widget class="QSlider" name="videoFrameBar">
-    <property name="geometry">
-     <rect>
-      <x>800</x>
-      <y>500</y>
-      <width>351</width>
-      <height>22</height>
-     </rect>
-    </property>
-    <property name="orientation">
-     <enum>Qt::Horizontal</enum>
-    </property>
-   </widget>
-   <widget class="QLabel" name="motionFrame">
-    <property name="geometry">
-     <rect>
-      <x>770</x>
-      <y>430</y>
-      <width>211</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>MtionFrame:</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="videoFrame">
-    <property name="geometry">
-     <rect>
-      <x>770</x>
-      <y>480</y>
-      <width>211</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>MtionFrame:</string>
-    </property>
-   </widget>
-   <widget class="QRadioButton" name="radioCheckForVideo">
-    <property name="enabled">
-     <bool>true</bool>
-    </property>
-    <property name="geometry">
-     <rect>
-      <x>770</x>
-      <y>410</y>
-      <width>82</width>
-      <height>17</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>ExportVideo</string>
-    </property>
-    <property name="checked">
-     <bool>false</bool>
-    </property>
-    <property name="autoRepeat">
-     <bool>false</bool>
-    </property>
+    <widget class="QWidget" name="recording">
+     <attribute name="title">
+      <string>Recorder</string>
+     </attribute>
+     <widget class="QPushButton" name="recordingButton">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>50</y>
+        <width>111</width>
+        <height>71</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Start Recording</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="stopCamera">
+      <property name="geometry">
+       <rect>
+        <x>300</x>
+        <y>50</y>
+        <width>111</width>
+        <height>71</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>StopCamera</string>
+      </property>
+     </widget>
+     <widget class="QRadioButton" name="radioCheckForVideo">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>10</y>
+        <width>82</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>ExportVideo</string>
+      </property>
+      <property name="checked">
+       <bool>false</bool>
+      </property>
+      <property name="autoRepeat">
+       <bool>false</bool>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="replaying">
+     <attribute name="title">
+      <string>Replayer</string>
+     </attribute>
+     <widget class="QPushButton" name="pushButton_3">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>130</y>
+        <width>75</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Play</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="videoFrame">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>80</y>
+        <width>211</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>MtionFrame:</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="motionFrame">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>30</y>
+        <width>211</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>MtionFrame:</string>
+      </property>
+     </widget>
+     <widget class="QSlider" name="videoFrameBar">
+      <property name="geometry">
+       <rect>
+        <x>40</x>
+        <y>100</y>
+        <width>351</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+     <widget class="QSlider" name="motionFrameBar">
+      <property name="geometry">
+       <rect>
+        <x>40</x>
+        <y>50</y>
+        <width>351</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+     <widget class="QRadioButton" name="radioButton">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>10</y>
+        <width>101</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Synchronization</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButton_2">
+      <property name="geometry">
+       <rect>
+        <x>130</x>
+        <y>130</y>
+        <width>51</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>&gt;</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButton">
+      <property name="geometry">
+       <rect>
+        <x>80</x>
+        <y>130</y>
+        <width>51</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>&lt;</string>
+      </property>
+     </widget>
+    </widget>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
@@ -274,12 +326,15 @@
     <signal>loadedFrame(int,int)</signal>
     <signal>buttonChangedFrame(int)</signal>
     <signal>setFrameLabelTex(QString)</signal>
+    <signal>changeCameraIndex(int)</signal>
     <slot>startRecording()</slot>
     <slot>importFile()</slot>
     <slot>lastFrame()</slot>
     <slot>nextFrame()</slot>
     <slot>changeToFrame(int)</slot>
     <slot>reOutPutDataFile()</slot>
+    <slot>synchroMode(bool)</slot>
+    <slot>autoPlayMode()</slot>
    </slots>
   </customwidget>
   <customwidget>
@@ -295,6 +350,7 @@
     <slot>killWokerTimer()</slot>
     <slot>importVideo()</slot>
     <slot>changeReaplyingIndex(int)</slot>
+    <slot>synchroMode(bool)</slot>
    </slots>
   </customwidget>
  </customwidgets>
@@ -309,8 +365,8 @@
    <slot>startRecording()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>760</x>
-     <y>435</y>
+     <x>772</x>
+     <y>540</y>
     </hint>
     <hint type="destinationlabel">
      <x>74</x>
@@ -341,8 +397,8 @@
    <slot>lastFrame()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>870</x>
-     <y>435</y>
+     <x>842</x>
+     <y>615</y>
     </hint>
     <hint type="destinationlabel">
      <x>125</x>
@@ -357,8 +413,8 @@
    <slot>nextFrame()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>900</x>
-     <y>435</y>
+     <x>892</x>
+     <y>615</y>
     </hint>
     <hint type="destinationlabel">
      <x>162</x>
@@ -373,8 +429,8 @@
    <slot>toggleRecording()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>829</x>
-     <y>421</y>
+     <x>841</x>
+     <y>526</y>
     </hint>
     <hint type="destinationlabel">
      <x>862</x>
@@ -389,8 +445,8 @@
    <slot>killWokerTimer()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1160</x>
-     <y>424</y>
+     <x>1102</x>
+     <y>529</y>
     </hint>
     <hint type="destinationlabel">
      <x>980</x>
@@ -539,6 +595,102 @@
     <hint type="destinationlabel">
      <x>380</x>
      <y>327</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>radioButton</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>mLeapWidget</receiver>
+   <slot>synchroMode(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>812</x>
+     <y>453</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>380</x>
+     <y>327</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>radioButton</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>mCamera</receiver>
+   <slot>synchroMode(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>812</x>
+     <y>453</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>980</x>
+     <y>223</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>mLeapWidget</sender>
+   <signal>changeCameraIndex(int)</signal>
+   <receiver>videoFrameBar</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>578</x>
+     <y>548</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>920</x>
+     <y>548</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>videoFrameBar</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>mCamera</receiver>
+   <slot>changeReaplyingIndex(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1124</x>
+     <y>544</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1116</x>
+     <y>378</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>motionFrameBar</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>mLeapWidget</receiver>
+   <slot>changeToFrame(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1141</x>
+     <y>494</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>403</x>
+     <y>519</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_3</sender>
+   <signal>clicked()</signal>
+   <receiver>mLeapWidget</receiver>
+   <slot>autoPlayMode()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>803</x>
+     <y>605</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>684</x>
+     <y>601</y>
     </hint>
    </hints>
   </connection>

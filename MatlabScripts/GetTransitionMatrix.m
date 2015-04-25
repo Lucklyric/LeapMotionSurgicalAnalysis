@@ -1,7 +1,7 @@
 function [ transitionProbability ] = GetTransitionMatrix(flag)
 %UNTITLED3 Summary of this function goes here
 %   Detailed explanation goes here
-transitionProbability = zeros(8);
+transitionProbability = zeros(6);
 % state: 1:Idle 2:Droping 3:Grasping 4:Elevating 5:Translating 6:Releasing |
 % 7:Droping+Grasping 8:Elevating+Releasing
 switch flag
@@ -42,8 +42,8 @@ switch flag
             0 0 0 0 0 0 0 0; %8
             ];
     otherwise
-        for row=1:8
-            for col=1:8
+        for row=1:6
+            for col=1:6
                 transitionProbability(row,col)=1/8;
             end
         end

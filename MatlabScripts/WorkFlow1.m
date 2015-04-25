@@ -20,7 +20,6 @@ Case8_RawObserve = transp([DiscreteForCase8{1};DiscreteForCase8{2};DiscreteForCa
 Case9_RawObserve = transp([DiscreteForCase9{1};DiscreteForCase9{2};DiscreteForCase9{4}]);
 Case10_RawObserve = transp([DiscreteForCase10{1};DiscreteForCase10{2};DiscreteForCase10{4}]);
 
-
 %Build HMM For Case3
 Prior = zeros(1,8);
 Prior(1) = 1;
@@ -32,12 +31,23 @@ Case5ObSequence = EstObservationSequence(Case5_RawObserve,Case3_C);
 Case6ObSequence = EstObservationSequence(Case6_RawObserve,Case3_C);
 Case7ObSequence = EstObservationSequence(Case7_RawObserve,Case3_C);
 
-[TRANS,EMIS]=hmmtrain([Case3ObSequence,Case4ObSequence,Case6ObSequence,Case3ObSequence,Case4ObSequence,Case6ObSequence,Case3ObSequence,Case4ObSequence,Case6ObSequence],TRANS,EMIS);
+
 %Case2ObSequence = EstObservationSequence(Case2_RawObserve,Case3_C);
 Case8ObSequence = EstObservationSequence(Case8_RawObserve,Case3_C);
 Case9ObSequence = EstObservationSequence(Case9_RawObserve,Case3_C);
 Case10ObSequence = EstObservationSequence(Case10_RawObserve,Case3_C);
 
+%  Case3ObSequence = [Case3ObSequence,];
+%  Case4ObSequence = [Case4ObSequence,Case4ObSequence,Case4ObSequence];
+%  Case5ObSequence = [Case5ObSequence,Case5ObSequence,Case5ObSequence];
+%  Case6ObSequence = [Case6ObSequence,Case6ObSequence,Case6ObSequence];
+%  Case7ObSequence = [Case7ObSequence,Case7ObSequence,Case7ObSequence];
+%  Case8ObSequence = [Case8ObSequence,Case8ObSequence,Case8ObSequence];
+%  Case9ObSequence = [Case9ObSequence,Case9ObSequence,Case9ObSequence];
+%  Case10ObSequence = [Case10ObSequence,Case10ObSequence,Case10ObSequence];
+
+
+[TRANS,EMIS]=hmmtrain([Case3ObSequence,Case4ObSequence,Case5ObSequence,Case6ObSequence],TRANS,EMIS);
 %[LL1,Prior,TRANS,EMIS]=learn_dhmm([Case4ObSequence,Case5ObSequence,Case6ObSequence],Prior,TRANS,EMIS,5);
 %[LL2,Prior,TRANS,EMIS]=learn_dhmm(Case5ObSequence,Prior,TRANS,EMIS,5);
 %[LL3,Prior,TRANS,EMIS]=learn_dhmm(Case6ObSequence,Prior,TRANS,EMIS,5);

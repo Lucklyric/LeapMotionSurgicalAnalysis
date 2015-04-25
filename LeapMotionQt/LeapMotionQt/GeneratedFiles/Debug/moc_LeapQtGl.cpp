@@ -19,8 +19,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_LeapQtGl_t {
-    QByteArrayData data[19];
-    char stringdata[214];
+    QByteArrayData data[23];
+    char stringdata[262];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -40,22 +40,28 @@ QT_MOC_LITERAL(7, 77, 5), // "start"
 QT_MOC_LITERAL(8, 83, 3), // "end"
 QT_MOC_LITERAL(9, 87, 18), // "buttonChangedFrame"
 QT_MOC_LITERAL(10, 106, 5), // "index"
-QT_MOC_LITERAL(11, 112, 16), // "setFrameLabelTex"
-QT_MOC_LITERAL(12, 129, 7), // "mString"
-QT_MOC_LITERAL(13, 137, 14), // "startRecording"
-QT_MOC_LITERAL(14, 152, 10), // "importFile"
-QT_MOC_LITERAL(15, 163, 9), // "lastFrame"
-QT_MOC_LITERAL(16, 173, 9), // "nextFrame"
-QT_MOC_LITERAL(17, 183, 13), // "changeToFrame"
-QT_MOC_LITERAL(18, 197, 16) // "reOutPutDataFile"
+QT_MOC_LITERAL(11, 112, 17), // "changeCameraIndex"
+QT_MOC_LITERAL(12, 130, 16), // "setFrameLabelTex"
+QT_MOC_LITERAL(13, 147, 7), // "mString"
+QT_MOC_LITERAL(14, 155, 14), // "startRecording"
+QT_MOC_LITERAL(15, 170, 10), // "importFile"
+QT_MOC_LITERAL(16, 181, 9), // "lastFrame"
+QT_MOC_LITERAL(17, 191, 9), // "nextFrame"
+QT_MOC_LITERAL(18, 201, 13), // "changeToFrame"
+QT_MOC_LITERAL(19, 215, 11), // "synchroMode"
+QT_MOC_LITERAL(20, 227, 4), // "flag"
+QT_MOC_LITERAL(21, 232, 12), // "autoPlayMode"
+QT_MOC_LITERAL(22, 245, 16) // "reOutPutDataFile"
 
     },
     "LeapQtGl\0callCameraUpdate\0\0"
     "sendOneMotionFrame\0Leap::Frame\0mFrame\0"
     "loadedFrame\0start\0end\0buttonChangedFrame\0"
-    "index\0setFrameLabelTex\0mString\0"
-    "startRecording\0importFile\0lastFrame\0"
-    "nextFrame\0changeToFrame\0reOutPutDataFile"
+    "index\0changeCameraIndex\0setFrameLabelTex\0"
+    "mString\0startRecording\0importFile\0"
+    "lastFrame\0nextFrame\0changeToFrame\0"
+    "synchroMode\0flag\0autoPlayMode\0"
+    "reOutPutDataFile"
 };
 #undef QT_MOC_LITERAL
 
@@ -65,34 +71,38 @@ static const uint qt_meta_data_LeapQtGl[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-      11,   14, // methods
+      14,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-       5,       // signalCount
+       6,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    0,   69,    2, 0x06 /* Public */,
-       3,    1,   70,    2, 0x06 /* Public */,
-       6,    2,   73,    2, 0x06 /* Public */,
-       9,    1,   78,    2, 0x06 /* Public */,
-      11,    1,   81,    2, 0x06 /* Public */,
+       1,    0,   84,    2, 0x06 /* Public */,
+       3,    1,   85,    2, 0x06 /* Public */,
+       6,    2,   88,    2, 0x06 /* Public */,
+       9,    1,   93,    2, 0x06 /* Public */,
+      11,    1,   96,    2, 0x06 /* Public */,
+      12,    1,   99,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-      13,    0,   84,    2, 0x08 /* Private */,
-      14,    0,   85,    2, 0x08 /* Private */,
-      15,    0,   86,    2, 0x08 /* Private */,
-      16,    0,   87,    2, 0x08 /* Private */,
-      17,    1,   88,    2, 0x0a /* Public */,
-      18,    0,   91,    2, 0x0a /* Public */,
+      14,    0,  102,    2, 0x08 /* Private */,
+      15,    0,  103,    2, 0x08 /* Private */,
+      16,    0,  104,    2, 0x08 /* Private */,
+      17,    0,  105,    2, 0x08 /* Private */,
+      18,    1,  106,    2, 0x0a /* Public */,
+      19,    1,  109,    2, 0x0a /* Public */,
+      21,    0,  112,    2, 0x0a /* Public */,
+      22,    0,  113,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void,
     QMetaType::Void, 0x80000000 | 4,    5,
     QMetaType::Void, QMetaType::Int, QMetaType::Int,    7,    8,
     QMetaType::Void, QMetaType::Int,   10,
-    QMetaType::Void, QMetaType::QString,   12,
+    QMetaType::Void, QMetaType::Int,   10,
+    QMetaType::Void, QMetaType::QString,   13,
 
  // slots: parameters
     QMetaType::Void,
@@ -100,6 +110,8 @@ static const uint qt_meta_data_LeapQtGl[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void, QMetaType::Int,   10,
+    QMetaType::Void, QMetaType::Bool,   20,
+    QMetaType::Void,
     QMetaType::Void,
 
        0        // eod
@@ -114,13 +126,16 @@ void LeapQtGl::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, vo
         case 1: _t->sendOneMotionFrame((*reinterpret_cast< Leap::Frame(*)>(_a[1]))); break;
         case 2: _t->loadedFrame((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
         case 3: _t->buttonChangedFrame((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 4: _t->setFrameLabelTex((*reinterpret_cast< QString(*)>(_a[1]))); break;
-        case 5: _t->startRecording(); break;
-        case 6: _t->importFile(); break;
-        case 7: _t->lastFrame(); break;
-        case 8: _t->nextFrame(); break;
-        case 9: _t->changeToFrame((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 10: _t->reOutPutDataFile(); break;
+        case 4: _t->changeCameraIndex((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 5: _t->setFrameLabelTex((*reinterpret_cast< QString(*)>(_a[1]))); break;
+        case 6: _t->startRecording(); break;
+        case 7: _t->importFile(); break;
+        case 8: _t->lastFrame(); break;
+        case 9: _t->nextFrame(); break;
+        case 10: _t->changeToFrame((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 11: _t->synchroMode((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 12: _t->autoPlayMode(); break;
+        case 13: _t->reOutPutDataFile(); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -151,9 +166,15 @@ void LeapQtGl::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, vo
             }
         }
         {
+            typedef void (LeapQtGl::*_t)(int );
+            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&LeapQtGl::changeCameraIndex)) {
+                *result = 4;
+            }
+        }
+        {
             typedef void (LeapQtGl::*_t)(QString );
             if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&LeapQtGl::setFrameLabelTex)) {
-                *result = 4;
+                *result = 5;
             }
         }
     }
@@ -184,13 +205,13 @@ int LeapQtGl::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 11)
+        if (_id < 14)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 11;
+        _id -= 14;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 11)
+        if (_id < 14)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 11;
+        _id -= 14;
     }
     return _id;
 }
@@ -223,9 +244,16 @@ void LeapQtGl::buttonChangedFrame(int _t1)
 }
 
 // SIGNAL 4
-void LeapQtGl::setFrameLabelTex(QString _t1)
+void LeapQtGl::changeCameraIndex(int _t1)
 {
     void *_a[] = { Q_NULLPTR, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
     QMetaObject::activate(this, &staticMetaObject, 4, _a);
+}
+
+// SIGNAL 5
+void LeapQtGl::setFrameLabelTex(QString _t1)
+{
+    void *_a[] = { Q_NULLPTR, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
+    QMetaObject::activate(this, &staticMetaObject, 5, _a);
 }
 QT_END_MOC_NAMESPACE
