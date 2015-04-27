@@ -4,6 +4,7 @@
 //  Created by Jean-Pierre Mouilleseaux on 08 Dec 2013.
 //  Copyright 2013-2014 Chorded Constructions. All rights reserved.
 //
+//
 
 #include "Camera.h"
 #include "CameraBrowser.h"
