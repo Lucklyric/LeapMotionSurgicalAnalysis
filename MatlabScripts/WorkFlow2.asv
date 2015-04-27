@@ -31,7 +31,7 @@
 % [TwoHandCase2_NumOfMovs,TwoHandCase2_MeanArray,TwoHandCase2_TangV] = CalculateNumOfMovements(TwoHandCase2_RawVelObserve);
 % figure;
 subplot(1,2,1),
-plot(TwoHandCase1_MeanArray,'DisplayName','OneHandCase1_MeanArray');hold on;plot(TwoHandCase1_TangV,'DisplayName','OneHandCase1_TangV');hold off;
+plot(TwoHandCase1_MeanArray,'DisplayName','OneHandCase1_MeanArray');hold on;plot(OneHandCase1_TangV,'DisplayName','OneHandCase1_TangV');hold off;
 subplot(1,2,2),
-plot(TwoHandCase2_MeanArray,'DisplayName','OneHandCase1_MeanArray');hold on;plot(TwoHandCase2_TangV,'DisplayName','OneHandCase1_TangV');hold off;
+plot(THandCase2_MeanArray,'DisplayName','OneHandCase1_MeanArray');hold on;plot(OneHandCase2_TangV,'DisplayName','OneHandCase1_TangV');hold off;
 
