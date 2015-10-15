@@ -60,8 +60,7 @@ void DataRecorder::ParseCurrentFrametoFile(Leap::Frame currentFrame,int flag){
 			boost::filesystem::create_directory(boost::filesystem::current_path() / "FixedOutput");
 		}else if(flag == 1){
 			boost::filesystem::create_directory(boost::filesystem::current_path() / "Output");
-		}
-		else if (flag == 2){
+		}else if (flag == 2){
 			boost::filesystem::create_directory(boost::filesystem::current_path() / "ReOutput");
 		}
         time_t t = time(0);   // get time now
@@ -119,7 +118,7 @@ void DataRecorder::ParseCurrentFrametoFile(Leap::Frame currentFrame,int flag){
 	/*
 	*Check if has some hand lost 
 	*/
-	bool hasLeft = false;
+	/*bool hasLeft = false;
 	bool hasRight = false;
 	for (Leap::HandList::const_iterator handIter = hands.begin(); handIter != hands.end(); ++handIter) {
 		Leap::Hand hand = *handIter;
@@ -167,7 +166,36 @@ void DataRecorder::ParseCurrentFrametoFile(Leap::Frame currentFrame,int flag){
 				}
 			}
         }
-    }
+    }*/
+	
+	Leap::Hand mostLeft; 
+	Leap::Hand mostRight;
+	bool tmpCheck = false;
+	for (Leap::HandList::const_iterator handIter = hands.begin(); handIter != hands.end(); ++handIter) {
+		Leap::Hand hand = *handIter;
+		cinder::Vec3f palmPos = LeapMotion::toVec3f(hand.palmPosition());
+
+		if (!tmpCheck){
+			mostLeft = hand;
+			mostRight = hand;
+			tmpCheck = true;
+		}
+		else{
+			cinder::Vec3f mostLeftPos = LeapMotion::toVec3f(mostLeft.palmPosition());
+			cinder::Vec3f mostRightPos = LeapMotion::toVec3f(mostRight.palmPosition());
+			if (palmPos.x < mostLeftPos.x){
+				mostLeft = hand;
+			}
+			if (palmPos.x > mostRightPos.x){
+				mostRight = hand;
+			}
+		}
+		
+		
+	}
+	WriteToLeftHandFile(mostLeft);
+	WriteToRightHandFile(mostRight);
+
 }
 
 void DataRecorder::EndReocrding(){

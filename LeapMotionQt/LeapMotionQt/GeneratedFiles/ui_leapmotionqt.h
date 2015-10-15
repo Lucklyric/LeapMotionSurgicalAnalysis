@@ -37,6 +37,7 @@ public:
     QAction *actionImport;
     QAction *actionImport_Video;
     QAction *actionOutputDataFile;
+    QAction *actionConvertToJson;
     QWidget *centralWidget;
     LeapQtGl *mLeapWidget;
     QGroupBox *mGeneralInfo;
@@ -75,6 +76,8 @@ public:
         actionImport_Video->setObjectName(QStringLiteral("actionImport_Video"));
         actionOutputDataFile = new QAction(LeapMotionQtClass);
         actionOutputDataFile->setObjectName(QStringLiteral("actionOutputDataFile"));
+        actionConvertToJson = new QAction(LeapMotionQtClass);
+        actionConvertToJson->setObjectName(QStringLiteral("actionConvertToJson"));
         centralWidget = new QWidget(LeapMotionQtClass);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         mLeapWidget = new LeapQtGl(centralWidget);
@@ -175,6 +178,7 @@ public:
         menuBar->addAction(menuEtra->menuAction());
         menuFile->addAction(actionImport);
         menuFile->addAction(actionImport_Video);
+        menuFile->addAction(actionConvertToJson);
         menuEtra->addAction(actionOutputDataFile);
 
         retranslateUi(LeapMotionQtClass);
@@ -199,6 +203,7 @@ public:
         QObject::connect(videoFrameBar, SIGNAL(valueChanged(int)), mCamera, SLOT(changeReaplyingIndex(int)));
         QObject::connect(motionFrameBar, SIGNAL(valueChanged(int)), mLeapWidget, SLOT(changeToFrame(int)));
         QObject::connect(pushButton_3, SIGNAL(clicked()), mLeapWidget, SLOT(autoPlayMode()));
+        QObject::connect(actionConvertToJson, SIGNAL(triggered()), mLeapWidget, SLOT(convertFile()));
 
         tabWidget->setCurrentIndex(1);
 
@@ -212,6 +217,7 @@ public:
         actionImport->setText(QApplication::translate("LeapMotionQtClass", "Import Motion", 0));
         actionImport_Video->setText(QApplication::translate("LeapMotionQtClass", "Import Video", 0));
         actionOutputDataFile->setText(QApplication::translate("LeapMotionQtClass", "OutputDataFile", 0));
+        actionConvertToJson->setText(QApplication::translate("LeapMotionQtClass", "ConvertToJson", 0));
         mGeneralInfo->setTitle(QString());
         ldFps->setText(QApplication::translate("LeapMotionQtClass", "<html><head/><body><p><span style=\" color:#ffffff;\">deviceFps:</span></p></body></html>", 0));
         dFps->setText(QApplication::translate("LeapMotionQtClass", "0", 0));

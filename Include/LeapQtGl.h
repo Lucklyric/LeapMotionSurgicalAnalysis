@@ -61,6 +61,7 @@ public:
 	void importFile();
 	void lastFrame();
 	void nextFrame();
+	void convertFile();
 	public slots:
 	void changeToFrame(int index);
 	void synchroMode(bool flag);

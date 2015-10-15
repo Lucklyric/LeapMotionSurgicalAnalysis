@@ -19,8 +19,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_LeapQtGl_t {
-    QByteArrayData data[23];
-    char stringdata[262];
+    QByteArrayData data[24];
+    char stringdata[274];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -47,11 +47,12 @@ QT_MOC_LITERAL(14, 155, 14), // "startRecording"
 QT_MOC_LITERAL(15, 170, 10), // "importFile"
 QT_MOC_LITERAL(16, 181, 9), // "lastFrame"
 QT_MOC_LITERAL(17, 191, 9), // "nextFrame"
-QT_MOC_LITERAL(18, 201, 13), // "changeToFrame"
-QT_MOC_LITERAL(19, 215, 11), // "synchroMode"
-QT_MOC_LITERAL(20, 227, 4), // "flag"
-QT_MOC_LITERAL(21, 232, 12), // "autoPlayMode"
-QT_MOC_LITERAL(22, 245, 16) // "reOutPutDataFile"
+QT_MOC_LITERAL(18, 201, 11), // "convertFile"
+QT_MOC_LITERAL(19, 213, 13), // "changeToFrame"
+QT_MOC_LITERAL(20, 227, 11), // "synchroMode"
+QT_MOC_LITERAL(21, 239, 4), // "flag"
+QT_MOC_LITERAL(22, 244, 12), // "autoPlayMode"
+QT_MOC_LITERAL(23, 257, 16) // "reOutPutDataFile"
 
     },
     "LeapQtGl\0callCameraUpdate\0\0"
@@ -59,9 +60,9 @@ QT_MOC_LITERAL(22, 245, 16) // "reOutPutDataFile"
     "loadedFrame\0start\0end\0buttonChangedFrame\0"
     "index\0changeCameraIndex\0setFrameLabelTex\0"
     "mString\0startRecording\0importFile\0"
-    "lastFrame\0nextFrame\0changeToFrame\0"
-    "synchroMode\0flag\0autoPlayMode\0"
-    "reOutPutDataFile"
+    "lastFrame\0nextFrame\0convertFile\0"
+    "changeToFrame\0synchroMode\0flag\0"
+    "autoPlayMode\0reOutPutDataFile"
 };
 #undef QT_MOC_LITERAL
 
@@ -71,7 +72,7 @@ static const uint qt_meta_data_LeapQtGl[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-      14,   14, // methods
+      15,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -79,22 +80,23 @@ static const uint qt_meta_data_LeapQtGl[] = {
        6,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    0,   84,    2, 0x06 /* Public */,
-       3,    1,   85,    2, 0x06 /* Public */,
-       6,    2,   88,    2, 0x06 /* Public */,
-       9,    1,   93,    2, 0x06 /* Public */,
-      11,    1,   96,    2, 0x06 /* Public */,
-      12,    1,   99,    2, 0x06 /* Public */,
+       1,    0,   89,    2, 0x06 /* Public */,
+       3,    1,   90,    2, 0x06 /* Public */,
+       6,    2,   93,    2, 0x06 /* Public */,
+       9,    1,   98,    2, 0x06 /* Public */,
+      11,    1,  101,    2, 0x06 /* Public */,
+      12,    1,  104,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-      14,    0,  102,    2, 0x08 /* Private */,
-      15,    0,  103,    2, 0x08 /* Private */,
-      16,    0,  104,    2, 0x08 /* Private */,
-      17,    0,  105,    2, 0x08 /* Private */,
-      18,    1,  106,    2, 0x0a /* Public */,
-      19,    1,  109,    2, 0x0a /* Public */,
-      21,    0,  112,    2, 0x0a /* Public */,
-      22,    0,  113,    2, 0x0a /* Public */,
+      14,    0,  107,    2, 0x08 /* Private */,
+      15,    0,  108,    2, 0x08 /* Private */,
+      16,    0,  109,    2, 0x08 /* Private */,
+      17,    0,  110,    2, 0x08 /* Private */,
+      18,    0,  111,    2, 0x08 /* Private */,
+      19,    1,  112,    2, 0x0a /* Public */,
+      20,    1,  115,    2, 0x0a /* Public */,
+      22,    0,  118,    2, 0x0a /* Public */,
+      23,    0,  119,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void,
@@ -109,8 +111,9 @@ static const uint qt_meta_data_LeapQtGl[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
+    QMetaType::Void,
     QMetaType::Void, QMetaType::Int,   10,
-    QMetaType::Void, QMetaType::Bool,   20,
+    QMetaType::Void, QMetaType::Bool,   21,
     QMetaType::Void,
     QMetaType::Void,
 
@@ -132,10 +135,11 @@ void LeapQtGl::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, vo
         case 7: _t->importFile(); break;
         case 8: _t->lastFrame(); break;
         case 9: _t->nextFrame(); break;
-        case 10: _t->changeToFrame((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 11: _t->synchroMode((*reinterpret_cast< bool(*)>(_a[1]))); break;
-        case 12: _t->autoPlayMode(); break;
-        case 13: _t->reOutPutDataFile(); break;
+        case 10: _t->convertFile(); break;
+        case 11: _t->changeToFrame((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 12: _t->synchroMode((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 13: _t->autoPlayMode(); break;
+        case 14: _t->reOutPutDataFile(); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -205,13 +209,13 @@ int LeapQtGl::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 14)
+        if (_id < 15)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 14;
+        _id -= 15;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 14)
+        if (_id < 15)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 14;
+        _id -= 15;
     }
     return _id;
 }

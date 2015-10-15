@@ -3,6 +3,11 @@
 #include <iostream>
 #include <QtWidgets\QFileDialog>
 #include "leapmotionqt.h"
+#include <QJsonDocument>
+#include <QJsonArray>
+#include <QJsonObject>
+#include <QFile>
+#include <QDir>
 
 #define __BONES__
 using namespace Leap;
@@ -166,6 +171,7 @@ void LeapQtGl::drawHand(Leap::Hand &hand, Vec3f position){
 
 	Leap::Matrix handTransform = hand.basis();
 
+	cout << handTransform.toString() << endl;
 	if (!mStaticOrientHand)
 	{
 		handTransform = handTransform.rigidInverse();
@@ -257,6 +263,7 @@ void LeapQtGl::drawHand(Leap::Hand &hand, Vec3f position){
 		gl::drawColorCube(Vec3f(0, 0, 0), Vec3f(10, 10, dipBone.length()));
 		gl::popMatrices();
 
+		
 #else
 		float mag = finger.direction().dot(-hand.palmNormal());
 		Leap::Vector right = finger.direction().cross(-hand.palmNormal());
@@ -293,6 +300,116 @@ void LeapQtGl::startRecording(){
 		cout << "StartRecoridng" << endl;
 		mLeap->startRecording();
 	}
+}
+
+void LeapQtGl::convertFile() {
+	isReplaying = false;
+	deserializedFrames.clear();
+	QString qName = QFileDialog::getOpenFileName();
+	std::string fileName = qName.toUtf8().constData();
+	cout << fileName << endl;
+	std::ifstream in(fileName, std::fstream::in | std::fstream::binary);
+	std::string contents;
+	if (in)
+	{
+		long l, m;
+		in.seekg(0, std::ios::beg);
+		long nextBlockSize = 0;
+		in >> nextBlockSize;
+		std::cout << "Start Load File.." << std::endl;
+		while (!in.eof())
+		{
+			contents.resize(nextBlockSize);
+			in.read(&contents[0], nextBlockSize);
+			Leap::Frame newFrame;
+			newFrame.deserialize(contents);
+			if (newFrame.isValid()) deserializedFrames.push_back(newFrame);
+			in >> nextBlockSize;
+		}
+		in.close();
+	}
+	else if (errno) {
+		std::cout << "Error: " << errno << std::endl;
+
+	}
+	//output the frames array to json data format
+	QJsonObject jsonObject;
+	QJsonArray jsonClients;
+	{
+		QJsonObject jsonClient;
+		QJsonArray jsonFrames;
+		for (int i = 0; i < (int)this->deserializedFrames.size(); i++) {
+			Leap::Frame frame = deserializedFrames.at(i);
+			QJsonObject jsonFrame;
+			QJsonArray jsonHands;
+			const Leap::HandList& hands = frame.hands();
+
+			// Iterate through hands
+			for (Leap::HandList::const_iterator handIter = hands.begin(); handIter != hands.end(); ++handIter) {
+				Leap::Hand hand = *handIter;
+				QJsonObject jsonHand;
+				jsonHand["position"] = QJsonArray({hand.palmPosition().x,hand.palmPosition().y,hand.palmPosition().z});
+				Leap::Matrix handTransform = hand.basis().rigidInverse();
+				jsonHand["orientation"] = QJsonArray({ QJsonArray({ handTransform.xBasis.x,handTransform.xBasis.y,handTransform.xBasis.z }),
+					QJsonArray({ handTransform.yBasis.x,handTransform.yBasis.y,handTransform.yBasis.z }),
+					QJsonArray({ handTransform.zBasis.x,handTransform.zBasis.y,handTransform.zBasis.z }) });
+				QJsonArray jsonFingers;
+				const Leap::FingerList& fingers = hand.fingers();
+				for (Leap::FingerList::const_iterator pointIter = fingers.begin(); pointIter != fingers.end(); ++pointIter) {
+					const Leap::Finger& finger = *pointIter;
+					QJsonObject jsonFinger;
+					QJsonArray jsonBones;
+					for (int boneType = 0; boneType <= 3; boneType++) {
+						QJsonObject jsonBone;
+						Leap::Bone bone = finger.bone(Leap::Bone::Type(boneType));
+						jsonBone["type"] = boneType;
+						jsonBone["preJoint"] = QJsonArray({ bone.prevJoint().x,bone.prevJoint().y,bone.prevJoint().z });
+						jsonBone["nextJoint"] = QJsonArray({ bone.nextJoint().x,bone.nextJoint().y,bone.nextJoint().z });
+						Leap::Matrix boneTransform = bone.basis().rigidInverse();
+						jsonBone["orientation"] = QJsonArray({ QJsonArray({ boneTransform.xBasis.x,boneTransform.xBasis.y,boneTransform.xBasis.z }),
+							QJsonArray({ boneTransform.yBasis.x,boneTransform.yBasis.y,boneTransform.yBasis.z }),
+							QJsonArray({ boneTransform.zBasis.x,boneTransform.zBasis.y,boneTransform.zBasis.z }) });
+						jsonBones.append(jsonBone);
+					}
+					jsonFinger["bones"] = jsonBones;
+					jsonFinger["type"] = finger.type();
+					jsonFingers.append(jsonFinger);
+				}
+				jsonHand["fingers"] = jsonFingers;
+				string handType;
+				if (hand.isLeft()) {
+					handType = "left";
+				}
+				else {
+					handType = "right";
+				}
+				jsonHand["type"] = handType.c_str();
+				jsonHands.append(jsonHand);
+			}
+			jsonFrame["hands"] = jsonHands;
+			jsonFrame["id"] = frame.id();
+			jsonFrame["timestamp"] = frame.timestamp();
+			jsonFrames.append(jsonFrame);
+			//break;
+		}
+		jsonClient["id"] = -1;
+		jsonClient["frames"] = jsonFrames;
+		jsonClients.append(jsonClient);
+	}
+	jsonObject["clients"] = jsonClients;
+	QJsonDocument jsonDoc(jsonObject);
+
+	QDir dir("motions");
+	if (!dir.exists()) {
+		dir.mkpath(".");
+	}
+
+	QFile jsonFile("motions/test.json");
+	jsonFile.open(QFile::WriteOnly);
+	jsonFile.write(jsonDoc.toJson(QJsonDocument::Compact));
+	jsonFile.close();
+	deserializedFrames.clear();
+	std::cout << "Output JSON file success" << std::endl;
 }
 
 void LeapQtGl::importFile(){
